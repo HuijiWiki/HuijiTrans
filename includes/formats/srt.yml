@@ -1,0 +1,46 @@
+Basic:
+        id: out-%id%
+        label: %label%
+        description: %description%
+
+TEMPLATE:
+        BASIC:
+                icon: wiki://SRT.png
+                namespace: NS_PUBLICATION
+                class: SrtFileBasedMessageGroup
+                sourcelanguage: en
+        FILES:
+                class: SrtFFS
+                sourcePattern: %GROUPROOT%/src/src_%CODE%.srt
+                targetPattern: %GROUPROOT%/target/subtitle2_%CODE%.srt
+                definitionFile: %GROUPROOT%/stc/src_en.srt
+                codeMap: 
+                        en: english
+        MANGLER:
+                class: StringMatcher
+                patterns:
+                        - "*"
+                prefix: %id%
+        CHECKER:
+                class: SrtStylingChecker
+                checks:
+                        - chineseNumberCheck
+                        - chineseMarkCheck
+                        - braceBalanceCheck
+                        - balancedTagsCheck
+        INSERTABLES:
+                class: SrtInsertablesSuggester
+        TAGS:
+                optional:
+                        - optional_*
+                ignored:
+                        - ignored_*
+        LANGUAGES:
+                whitelist:
+                        - qqq
+                        - en
+                        - zh
+
+        #AUTOLOAD:
+        #       SrtMessageChecker: Checker.php
+        #       SrtInsertablesSuggester: Suggester.php
