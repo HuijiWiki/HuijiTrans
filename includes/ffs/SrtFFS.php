@@ -30,7 +30,7 @@ class SrtFFS extends SimpleFFS {
         $mangler = $this->group->getMangler();
         foreach( $cues as $index => $cue ){
             //@todo fuzzy handler
-            $key = self::buildUnmangledKey($index, (string)$cue->getStartMS(), (string)$cue->getEndMS())
+            $key = self::buildUnmangledKey($index, (string)$cue->getStartMS(), (string)$cue->getEndMS());
             $value = stripcslashes($cue->getText());
             $messages[$key] = $value;
         }
@@ -85,10 +85,6 @@ class SrtFFS extends SimpleFFS {
        'end' => '至：',
    );
 
- 
-   public function supportsFuzzy() {
-       return 'yes';
-   }
  
    public function getFileExtensions() {
        return array( '.srt' );
