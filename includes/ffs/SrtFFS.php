@@ -25,7 +25,7 @@ class SrtFFS extends SimpleFFS {
         // create a temp file from $data
         $srt = new SubripFile();
         $srt->loadFromString($data);
-        $cues = $srt->getCues()
+        $cues = $srt->getCues();
         $messages = array();
         $mangler = $this->group->getMangler();
         foreach( $cues as $index => $cue ){
