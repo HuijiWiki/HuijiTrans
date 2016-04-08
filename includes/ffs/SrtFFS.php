@@ -30,7 +30,7 @@ class SrtFFS extends SimpleFFS {
         $mangler = $this->group->getMangler();
         foreach( $cues as $index => $cue ){
             //@todo fuzzy handler
-            $key = self::buildUnmangledKey($index, (string)$cue->getStartMS(), (string)$cue->getEndMS());
+            $key = self::buildUnmangledKey($index, (string)$cue->getStartMS(), (string)$cue->getStopMS());
             $value = stripcslashes($cue->getText());
             $messages[$key] = $value;
         }
