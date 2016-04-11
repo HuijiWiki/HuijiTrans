@@ -32,7 +32,15 @@ class SrtFFSTest extends MediaWikiTestCase {
 
 2
 00:02:56,184 --> 00:02:59,617
-stop!
+"foobar!"
+
+3
+00:11:56,184 --> 00:12:59,123
+- "foo!" - bar
+
+4
+00:11:56,184 --> 00:12:59,123
+\music\
 SRT;
  
        /**

@@ -67,9 +67,9 @@ class SrtFFS extends SimpleFFS {
     }
     public static function buildUnmangledKey($number, $startMS, $endMS){
         $res = '';
-        $res .= self::$keypart['number'].$number;
-        $res .= self::$keypart['start'].$startMS;
-        $res .= self::$keypart['end'].$endMS;
+        $res .= self::$keypart['number'].$number.' ';
+        $res .= self::$keypart['start'].$startMS.'ms ';
+        $res .= self::$keypart['end'].$endMS.'ms';
         return $res;
 
     }
