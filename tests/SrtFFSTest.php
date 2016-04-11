@@ -39,7 +39,7 @@ class SrtFFSTest extends MediaWikiTestCase {
 - "foo!" - bar
 
 4
-00:11:56,184 --> 00:12:59,123
+00:14:56,184 --> 00:14:59,000
 \music\
 
 5
@@ -58,7 +58,7 @@ SRT;
        $ffs = new SrtFFS( $group );
        $parsed = $ffs->readFromVariable( $file );
        $expected = array(
-           'wpt_voicerec' => 'Voice recording',
+            '序号：0自：172184至：173617' => '慢慢来'
            'wpt_stillimage' => '!!FUZZY!!Picture',
            'alot' => '{{PLURAL|one=bunny|other=bunnies}}',
            'has_quotes' => 'Go to "Wikipedia"',
