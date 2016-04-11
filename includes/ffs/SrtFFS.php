@@ -51,6 +51,7 @@ class SrtFFS extends SimpleFFS {
         // }
         foreach ( $collection as $key => $m ) {
             $key = $mangler->unmangle( $key );
+            var_dump($key);
             list($oldKey, $index, $start, $stop ) = self::teardownUnmangledKey($key);
             var_dump($oldKey);
             var_dump($start);
