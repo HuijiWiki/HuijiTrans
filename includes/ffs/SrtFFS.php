@@ -76,6 +76,7 @@ class SrtFFS extends SimpleFFS {
         $matches = array();
         $re = "/：([\\d]+)\\s.+?：([\\d\\.]+)\\s.+?：([\\d\\.]+)/u"; 
         preg_match_all($re, $key, $matches);
+        print_r($matches);die();
         return $matches;
     }
 

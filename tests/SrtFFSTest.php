@@ -9,7 +9,7 @@
  
 class SrtFFSTest extends MediaWikiTestCase {
  
-   protected $groupConfiguration = array(
+    protected $groupConfiguration = array(
        'BASIC' => array(
            'class' => 'FileBasedMessageGroup',
            'id' => 'test-id',
@@ -21,9 +21,9 @@ class SrtFFSTest extends MediaWikiTestCase {
            'class' => 'SrtFFS',
            'sourcePattern' => '',
        ),
-   );
- 
-   public function testParsing() {
+    );
+
+    public function testParsing() {
        $file =
 <<<SRT
 1
@@ -50,27 +50,27 @@ SRT;
        );
        $expected = array( 'MESSAGES' => $expected, 'AUTHORS' => array() );
        $this->assertEquals( $expected, $parsed );
-   }
- 
-   public function testWrite() {
+    }
+
+    public function testWrite() {
        /**
         * @var FileBasedMessageGroup $group
         */
        $group = MessageGroupBase::factory( $this->groupConfiguration );
        $ffs = new SrtFFS( $group );
- 
+
        $messages = array(
            'ko=26ra' => 'wawe',
            'foobar' => '!!FUZZY!!Kissa kala <koira> "a\'b',
            'amuch' => '{{PLURAL|one=bunny|other=bunnies}}',
        );
        $collection = new MockMessageCollection( $messages );
- 
+
        $xml = $ffs->writeIntoVariable( $collection );
        $parsed = $ffs->readFromVariable( $xml );
        $expected = array( 'MESSAGES' => $messages, 'AUTHORS' => array() );
        $this->assertEquals( $expected, $parsed );
-   }
+    }
 }
  
 class MockMessageCollection extends MessageCollection {
