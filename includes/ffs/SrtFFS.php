@@ -54,7 +54,7 @@ class SrtFFS extends SimpleFFS {
             list($oldKey, $index, $start, $stop ) = self::teardownUnmangledKey($key);
             $value = $m->translation();
             $value = str_replace( TRANSLATE_FUZZY, '', $value );
-            $cue = new SubripCue($start, $stop, $value);
+            $cue = new SubripCue($start[0], $stop[0], $value);
             $cue->setStartMS($start);
             $cue->setStopMS($stop);
             $srt->addCues($cue);
@@ -76,7 +76,6 @@ class SrtFFS extends SimpleFFS {
         $matches = array();
         $re = "/：([\\d]+)\\s.+?：([\\d\\.]+)\\s.+?：([\\d\\.]+)/u"; 
         preg_match_all($re, $key, $matches);
-        print_r($matches);die();
         return $matches;
     }
 
