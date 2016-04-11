@@ -58,7 +58,7 @@ SRT;
        $ffs = new SrtFFS( $group );
        $parsed = $ffs->readFromVariable( $file );
        $expected = array(
-            '序号：0自：172184至：173617' => '慢慢来'
+            '序号：0自：172184至：173617' => '慢慢来',
            'wpt_stillimage' => '!!FUZZY!!Picture',
            'alot' => '{{PLURAL|one=bunny|other=bunnies}}',
            'has_quotes' => 'Go to "Wikipedia"',
