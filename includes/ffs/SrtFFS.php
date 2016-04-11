@@ -80,16 +80,16 @@ class SrtFFS extends SimpleFFS {
         return $matches;
     }
 
-   protected static $keypart = array(
-       'number' => '序号：',
-       'start' => '自：',
-       'end' => '至：',
-   );
+    protected static $keypart = array(
+        'number' => '序号：',
+        'start' => '自：',
+        'end' => '至：',
+    );
 
- 
-   public function getFileExtensions() {
-       return array( '.srt' );
-   }
+
+    public function getFileExtensions() {
+        return array( '.srt' );
+    }
  
 
 }

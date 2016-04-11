@@ -77,9 +77,12 @@ SRT;
        $ffs = new SrtFFS( $group );
 
        $messages = array(
-           'ko=26ra' => 'wawe',
-           'foobar' => '!!FUZZY!!Kissa kala <koira> "a\'b',
-           'amuch' => '{{PLURAL|one=bunny|other=bunnies}}',
+           '序号：0 自：172184ms 至：173617ms' => '慢慢来',
+           '序号：1 自：176184ms 至：179617ms' => '"foobar!"',
+           '序号：2 自：716184ms 至：779123ms' => '- "foo!" - \'bar\'',
+           '序号：3 自：896184ms 至：899000ms' => '\\music\\',
+           '序号：4 自：956184ms 至：1079123ms' => '!!FUZZY!!已过期',
+           '序号：5 自：4556184ms 至：8279123ms' => '@已过期'
        );
        $collection = new MockMessageCollection( $messages );
 
