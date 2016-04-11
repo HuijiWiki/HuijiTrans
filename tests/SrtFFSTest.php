@@ -103,7 +103,7 @@ class MockMessageCollection extends MessageCollection {
            $this->messages[$key] = $m;
        }
  
-       $this->messages['foobar']->addTag( 'fuzzy' );
+       $this->messages['序号：4 自：956184ms 至：1079123ms']->addTag( 'fuzzy' );
    }
  
    public function filter( $type, $condition = true, $value = null ) {
