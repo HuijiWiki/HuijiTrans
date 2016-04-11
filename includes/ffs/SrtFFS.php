@@ -56,12 +56,12 @@ class SrtFFS extends SimpleFFS {
             $value = str_replace( TRANSLATE_FUZZY, '', $value );
             if (count($start)>0 && count($stop)>0){
                 $cue = new SubripCue($start[0], $stop[0], $value);
-                $cue->setStartMS($start);
-                $cue->setStopMS($stop);
+                $cue->setStartMS($start[0]);
+                $cue->setStopMS($stop[0]);
                 $srt->addCues($cue);
-                $srt->build();
             }
         }
+        $srt->build();
         return $srt->getFileContent();
 
     }
