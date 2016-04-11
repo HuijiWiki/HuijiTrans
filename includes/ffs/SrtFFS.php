@@ -78,7 +78,7 @@ class SrtFFS extends SimpleFFS {
     }
     public static function teardownUnmangledKey($key){
         $matches = array();
-        $re = "/：([\\d]+)\\s.+?：([\\d\\.]+)\\s.+?：([\\d\\.]+)/u"; 
+        $re = "/：([\d]+)\\s.+?：([\\d\\.]+).+?：([\\d\\.]+)/u"; 
         preg_match_all($re, $key, $matches);
         return $matches;
     }
