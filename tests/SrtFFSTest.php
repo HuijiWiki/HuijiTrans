@@ -36,7 +36,7 @@ class SrtFFSTest extends MediaWikiTestCase {
 
 3
 00:11:56,184 --> 00:12:59,123
-- "foo!" - bar
+- "foo!" - 'bar'
 
 4
 00:14:56,184 --> 00:14:59,000
@@ -58,11 +58,12 @@ SRT;
        $ffs = new SrtFFS( $group );
        $parsed = $ffs->readFromVariable( $file );
        $expected = array(
-            '序号：0自：172184至：173617' => '慢慢来',
-           'wpt_stillimage' => '!!FUZZY!!Picture',
-           'alot' => '{{PLURAL|one=bunny|other=bunnies}}',
-           'has_quotes' => 'Go to "Wikipedia"',
-           'starts_with_at' => '@Wikipedia',
+           '序号：0 自：172184ms 至：173617ms' => '慢慢来',
+           '序号：1 自：176184ms 至：179617ms' => '"foobar!"',
+           '序号：2 自：716184ms 至：779123ms' => '- "foo!" - \'bar\'',
+           '序号：3 自：896184ms 至：899000ms' => '\\music\\',
+           '序号：4 自：956184ms 至：1079123ms' => '!!FUZZY!!已过期',
+           '序号：5 自：4556184ms 至：8279123ms' => '@已过期'
        );
        $expected = array( 'MESSAGES' => $expected, 'AUTHORS' => array() );
        $this->assertEquals( $expected, $parsed );

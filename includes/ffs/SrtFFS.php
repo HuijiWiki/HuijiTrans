@@ -31,7 +31,7 @@ class SrtFFS extends SimpleFFS {
         foreach( $cues as $index => $cue ){
             //@todo fuzzy handler
             $key = self::buildUnmangledKey($index, (string)$cue->getStartMS(), (string)$cue->getStopMS());
-            $value = stripcslashes($cue->getText());
+            $value = $cue->getText();
             $messages[$key] = $value;
         }
         return array(
