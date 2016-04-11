@@ -30,7 +30,7 @@ class SrtFFS extends SimpleFFS {
         $mangler = $this->group->getMangler();
         foreach( $cues as $index => $cue ){
             //@todo fuzzy handler
-            $key = self::buildUnmangledKey($index, (string)$cue->getStartMS(), (string)$cue->getStopMS());
+            $key = self::buildUnmangledKey($index, (string)$cue->getStart(), (string)$cue->getStop());
             $value = $cue->getText();
             $messages[$key] = $value;
         }
@@ -59,8 +59,8 @@ class SrtFFS extends SimpleFFS {
             $value = str_replace( TRANSLATE_FUZZY, '', $value );
             if (count($start)>0 && count($stop)>0){
                 $cue = new SubripCue($start[0], $stop[0], $value);
-                $cue->setStartMS($start[0]);
-                $cue->setStopMS($stop[0]);
+                // $cue->setStartMS($start[0]);
+                // $cue->setStopMS($stop[0]);
                 $srt->addCue($cue);
             }
         }
@@ -68,17 +68,17 @@ class SrtFFS extends SimpleFFS {
         return $srt->getFileContent();
 
     }
-    public static function buildUnmangledKey($number, $startMS, $endMS){
+    public static function buildUnmangledKey($number, $start, $end){
         $res = '';
         $res .= self::$keypart['number'].$number.' ';
-        $res .= self::$keypart['start'].$startMS.'ms ';
-        $res .= self::$keypart['end'].$endMS.'ms';
+        $res .= self::$keypart['start'].$start.' ';
+        $res .= self::$keypart['end'].$end.'';
         return $res;
 
     }
     public static function teardownUnmangledKey($key){
         $matches = array();
-        $re = "/：([\d]+)\\s.+?：([\\d\\.]+).+?：([\\d\\.]+)/u"; 
+        $re = "/：([\d]+)\\s.+?：([\\d\\.,:]+).+?：([\\d\\.,:]+)/u"; 
         preg_match_all($re, $key, $matches);
         return $matches;
     }

@@ -58,12 +58,12 @@ SRT;
        $ffs = new SrtFFS( $group );
        $parsed = $ffs->readFromVariable( $file );
        $expected = array(
-           '序号：0 自：172184ms 至：173617ms' => '慢慢来',
-           '序号：1 自：176184ms 至：179617ms' => '"foobar!"',
-           '序号：2 自：716184ms 至：779123ms' => '- "foo!" - \'bar\'',
-           '序号：3 自：896184ms 至：899000ms' => '\\music\\',
-           '序号：4 自：956184ms 至：1079123ms' => '!!FUZZY!!已过期',
-           '序号：5 自：4556184ms 至：8279123ms' => '@已过期'
+           '序号：0 自：00:02:52,184 至：00:02:53,617' => '慢慢来',
+           '序号：1 自：00:02:56,184 至：00:02:59,617' => '"foobar!"',
+           '序号：2 自：00:11:56,184 至：00:12:59,123' => '- "foo!" - \'bar\'',
+           '序号：3 自：00:14:56,184 至：00:14:59,000' => '\\music\\',
+           '序号：4 自：00:15:56,184 至：00:17:59,123' => '!!FUZZY!!已过期',
+           '序号：5 自：01:15:56,184 至：02:17:59,123' => '@已过期'
        );
        $expected = array( 'MESSAGES' => $expected, 'AUTHORS' => array() );
        $this->assertEquals( $expected, $parsed );
@@ -77,15 +77,14 @@ SRT;
        $ffs = new SrtFFS( $group );
 
        $messages = array(
-           '序号：0 自：172184ms 至：173617ms' => '慢慢来',
-           '序号：1 自：176184ms 至：179617ms' => '"foobar!"',
-           '序号：2 自：716184ms 至：779123ms' => '- "foo!" - \'bar\'',
-           '序号：3 自：896184ms 至：899000ms' => '\\music\\',
-           '序号：4 自：956184ms 至：1079123ms' => '!!FUZZY!!已过期',
-           '序号：5 自：4556184ms 至：8279123ms' => '@已过期'
+           '序号：0 自：00:02:52,184 至：00:02:53,617' => '慢慢来',
+           '序号：1 自：00:02:56,184 至：00:02:59,617' => '"foobar!"',
+           '序号：2 自：00:11:56,184 至：00:12:59,123' => '- "foo!" - \'bar\'',
+           '序号：3 自：00:14:56,184 至：00:14:59,000' => '\\music\\',
+           '序号：4 自：00:15:56,184 至：00:17:59,123' => '!!FUZZY!!已过期',
+           '序号：5 自：01:15:56,184 至：02:17:59,123' => '@已过期'
        );
        $collection = new MockMessageCollection( $messages );
-
        $xml = $ffs->writeIntoVariable( $collection );
        var_dump($xml);
        $parsed = $ffs->readFromVariable( $xml );
@@ -104,7 +103,7 @@ class MockMessageCollection extends MessageCollection {
            $this->messages[$key] = $m;
        }
  
-       $this->messages['序号：4 自：956184ms 至：1079123ms']->addTag( 'fuzzy' );
+       $this->messages['序号：4 自：00:15:56,184 至：00:17:59,123']->addTag( 'fuzzy' );
    }
  
    public function filter( $type, $condition = true, $value = null ) {
