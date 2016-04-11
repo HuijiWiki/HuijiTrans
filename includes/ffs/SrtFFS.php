@@ -54,12 +54,13 @@ class SrtFFS extends SimpleFFS {
             list($oldKey, $index, $start, $stop ) = self::teardownUnmangledKey($key);
             $value = $m->translation();
             $value = str_replace( TRANSLATE_FUZZY, '', $value );
-            $cue = new SubripCue($start[0], $stop[0], $value);
-            $cue->setStartMS($start);
-            $cue->setStopMS($stop);
-            $srt->addCues($cue);
-            $srt->build();
-
+            if ($start[0]!='' && $stop[0]!=''){
+                $cue = new SubripCue($start[0], $stop[0], $value);
+                $cue->setStartMS($start);
+                $cue->setStopMS($stop);
+                $srt->addCues($cue);
+                $srt->build();
+            }
         }
         return $srt->getFileContent();
 
