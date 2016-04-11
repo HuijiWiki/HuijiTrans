@@ -86,7 +86,6 @@ SRT;
        );
        $collection = new MockMessageCollection( $messages );
        $xml = $ffs->writeIntoVariable( $collection );
-       var_dump($xml);
        $parsed = $ffs->readFromVariable( $xml );
        $expected = array( 'MESSAGES' => $messages, 'AUTHORS' => array() );
        $this->assertEquals( $expected, $parsed );

@@ -51,12 +51,9 @@ class SrtFFS extends SimpleFFS {
         // }
         foreach ( $collection as $key => $m ) {
             $key = $mangler->unmangle( $key );
-            var_dump($key);
             list($oldKey, $index, $start, $stop ) = self::teardownUnmangledKey($key);
-            var_dump($oldKey);
-            var_dump($start);
             $value = $m->translation();
-            $value = str_replace( TRANSLATE_FUZZY, '', $value );
+            //$value = str_replace( TRANSLATE_FUZZY, '', $value );
             if (count($start)>0 && count($stop)>0){
                 $cue = new SubripCue($start[0], $stop[0], $value);
                 // $cue->setStartMS($start[0]);
