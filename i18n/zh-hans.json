@@ -1,0 +1,20 @@
+{
+	"@metadata": {
+		"authors": []
+	},
+	"huiji-trans-desc": "灰机Trans是由北京嘉闻杰诺网络科技有限公司制作的翻译插件，以满足粉丝团体日增长的合作汉化翻译需求。",
+	"translate-checks-chinese-comma":"在字幕中，建议不使用中文逗号，用空格代替",
+	"translate-checks-chinese-period":"在字幕中，建议不使用中文句号",
+	"translate-checks-chinese-colon":"在字幕中，建议不适用中文冒号，用空格代替",
+	"translate-checks-exclaimation-mark":"建议使用中文感叹号代替英文感叹号",
+	"translate-checks-question-mark":"建议使用中文问号代替英文问号",
+	"translate-checks-ellipsis":"建议使用中文省略号（……）来代替...",
+	"translate-checks-period":"建议去掉英文句号",
+	"translate-checks-colon":"建议用空格代替英文冒号",
+	"translate-checks-comma":"建议使用空格代替英文逗号",
+	"translate-checks-chinese-number":"建议使用$2代替英文整数$1",
+	"translate-checks-dialogue":"同一段时间轴中出现两人对话的，应保留英文形式，以短横线表示说话人",
+	"translate-checks-dialogue-format":"短横线后应添加空格以区分，后一句短横线前也应该添加空格以区分",
+	"translate-checks-middot":"应对外国人名合理使用间隔号（·），不可使用点（.）作为间隔号。正确例子：乔佛里·拜拉席恩",
+	"contentaction-myact": "My action"
+}
