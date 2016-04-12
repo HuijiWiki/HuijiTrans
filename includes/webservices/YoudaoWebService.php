@@ -103,8 +103,15 @@ class YoudaoWebService extends TranslationWebService {
  
    protected function parseResponse( TranslationQueryResponse $reply ) {
        $body = $reply->getBody();
- 
-       $text = preg_replace( '~<paragraph.*><!\[CDATA\[(.*)]]></paragraph>~', '\\1', $body );
+       $re = "/<paragraph.*?><!\\[CDATA\\[(.*?)]]><\\/paragraph>/"; 
+       $matches = array();
+       $text = '';
+       preg_match_all( $re, $body,  $matches);
+       if (count($matches)>0 && count($matches[1]>0) ){
+          foreach($matches[1] as $match){
+            $text .= $match;
+          }
+       }
        $text = Sanitizer::decodeCharReferences( $text );
        $text = $this->unwrapUntranslatable( $text );
  
