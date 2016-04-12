@@ -1,19 +1,19 @@
 Basic:
-        id: out-%id%
+        id: %id%
         label: %label%
         description: %description%
+File:
+        sourcePattern: %GROUPROOT%/srt/%id%/%CODE%.srt
+        :qtargetPattern: %GROUPROOT%/srt/%id%/%CODE%.srt       
 
 TEMPLATE:
         BASIC:
                 icon: wiki://SRT.png
-                namespace: NS_PUBLICATION
-                class: SrtFileBasedMessageGroup
+                namespace: NS_SRT
+                class: FileBasedMessageGroup
                 sourcelanguage: en
         FILES:
                 class: SrtFFS
-                sourcePattern: %GROUPROOT%/src/src_%CODE%.srt
-                targetPattern: %GROUPROOT%/target/subtitle2_%CODE%.srt
-                definitionFile: %GROUPROOT%/stc/src_en.srt
                 codeMap: 
                         en: english
         MANGLER:
@@ -24,8 +24,8 @@ TEMPLATE:
         CHECKER:
                 class: SrtStylingChecker
                 checks:
-                        - chineseNumberCheck
-                        - chineseMarkCheck
+                        - numberCheck
+                        - markCheck
                         - braceBalanceCheck
                         - balancedTagsCheck
         INSERTABLES:
