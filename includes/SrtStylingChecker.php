@@ -9,7 +9,7 @@
  */
 
 class SrtStylingChecker extends MessageChecker {
-	protected function numberCheck( $message, $code, &$warnings ){
+	protected function numberCheck( $messages, $code, &$warnings ){
 		foreach( $messages as $message ){
 			$key = $message->key();
 			$translation = $message->translation();
@@ -34,7 +34,7 @@ class SrtStylingChecker extends MessageChecker {
 			}	
 		}
 	}
-	protected function markCheck( $message, $code, &$warnings ){
+	protected function markCheck( $messages, $code, &$warnings ){
 		foreach( $messages as $message ){
 			$key = $message->key();
 			$translation = $message->translation();
