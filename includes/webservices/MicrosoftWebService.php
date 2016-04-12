@@ -70,7 +70,11 @@ class MicrosoftWebService extends TranslationWebService {
                $pairs[$from][$to] = true;
            }
        }
- 
+       $pairs['zh']['en'] = true;
+       $pairs['en']['zh'] = true;
+       $pairs['en']['zh-hans'] = true;
+       $pairs['en']['zh-cn'] = true;
+       $pairs['en']['zh-hant'] = true;
        return $pairs;
    }
  
