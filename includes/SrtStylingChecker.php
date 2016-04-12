@@ -20,7 +20,7 @@ class SrtStylingChecker extends MessageChecker {
 			$re = "/(?:^|[^\\d])(\\d{1,2}0{2,})/u";
 			$matches = array(); 	
 			preg_match_all($re, $nb, $matches);	
-			if (count($matches) > 0){
+			if (count($matches) > 0 && count($matches[1])>0){
 				$cn = new ChineseNumber($matches[1][0]);
 				$params = array();
 				$params[] = $cn;
@@ -50,7 +50,7 @@ class SrtStylingChecker extends MessageChecker {
 	                 array( 'COUNT', '' ),
 	            );				
 			}
-			if(mb_strpos($translation, '。', $key, $code)!==FALSE){
+			if(mb_strpos($translation, '。')!==FALSE){
 				$warnings[$key][] = array(
 	                 array( 'mark', 'period', $key, $code ),
 	                 'translate-checks-chinese-period', // Needs to be defined in i18n file
@@ -58,7 +58,7 @@ class SrtStylingChecker extends MessageChecker {
 	                 array( 'COUNT', '' ),
 	            );					
 			}
-			if(mb_strpos($translation, '：', $key, $code)!==FALSE){
+			if(mb_strpos($translation, '：')!==FALSE){
 				$warnings[$key][] = array(
 	                 array( 'mark', 'colon', $key, $code ),
 	                 'translate-checks-chinese-colon', // Needs to be defined in i18n file
@@ -66,7 +66,7 @@ class SrtStylingChecker extends MessageChecker {
 	                 array( 'COUNT', '' ),
 	            );					
 			}	
-			if(mb_strpos($translation, '!', $key, $code)!==FALSE){
+			if(mb_strpos($translation, '!')!==FALSE){
 				$warnings[$key][] = array(
 	                 array( 'mark', 'exclaimation', $key, $code ),
 	                 'translate-checks-exclaimation-mark', // Needs to be defined in i18n file
@@ -74,7 +74,7 @@ class SrtStylingChecker extends MessageChecker {
 	                 array( 'COUNT', '' ),
 	            );					
 			}				
-			if(mb_strpos($translation, '?', $key, $code)!==FALSE){
+			if(mb_strpos($translation, '?')!==FALSE){
 				$warnings[$key][] = array(
 	                 array( 'mark', 'question', $key, $code ),
 	                 'translate-checks-question-mark', // Needs to be defined in i18n file
@@ -82,7 +82,7 @@ class SrtStylingChecker extends MessageChecker {
 	                 array( 'COUNT', '' ),
 	            );					
 			}	
-			if(mb_strpos($translation, '...', $key, $code)!==FALSE){
+			if(mb_strpos($translation, '...')!==FALSE){
 				$warnings[$key][] = array(
 	                 array( 'mark', 'ellipsis', $key, $code ),
 	                 'translate-checks-ellipsis', // Needs to be defined in i18n file
@@ -90,7 +90,7 @@ class SrtStylingChecker extends MessageChecker {
 	                 array( 'COUNT', '' ),
 	            );					
 			}	
-			if(mb_strpos($translation, '.', $key, $code)!==FALSE){
+			if(mb_strpos($translation, '.')!==FALSE){
 				$warnings[$key][] = array(
 	                 array( 'mark', 'period', $key, $code ),
 	                 'translate-checks-period', // Needs to be defined in i18n file
@@ -98,7 +98,7 @@ class SrtStylingChecker extends MessageChecker {
 	                 array( 'COUNT', '' ),
 	            );					
 			}
-			if(mb_strpos($translation, ',', $key, $code)!==FALSE){
+			if(mb_strpos($translation, ',')!==FALSE){
 				$warnings[$key][] = array(
 	                 array( 'mark', 'comma', $key, $code ),
 	                 'translate-checks-comma', // Needs to be defined in i18n file
@@ -106,7 +106,7 @@ class SrtStylingChecker extends MessageChecker {
 	                 array( 'COUNT', '' ),
 	            );					
 			}
-			if(mb_strpos($translation, ':', $key, $code)!==FALSE){
+			if(mb_strpos($translation, ':')!==FALSE){
 				$warnings[$key][] = array(
 	                 array( 'mark', 'colon', $key, $code ),
 	                 'translate-checks-colon', // Needs to be defined in i18n file
