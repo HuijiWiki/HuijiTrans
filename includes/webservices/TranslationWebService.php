@@ -33,7 +33,7 @@ abstract class TranslationWebService {
            'apertium' => 'ApertiumWebService',
            'yandex' => 'YandexWebService',
            'remote-ttmserver' => 'RemoteTTMServerWebService',
-           'youdao' => "youdaoWebService",
+           'youdao' => "YoudaoWebService",
            'cxserver' => 'CxserverWebService',
        );
  
