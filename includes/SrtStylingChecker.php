@@ -46,72 +46,59 @@ class SrtStylingChecker extends MessageChecker {
 				$warnings[$key][] = array(
 	                 array( 'mark', 'comma', $key, $code ),
 	                 'translate-checks-chinese-comma', // Needs to be defined in i18n file
-	                 array( 'PARAMS', '' ),
-	                 array( 'COUNT', '' ),
 	            );				
 			}
 			if(mb_strpos($translation, '。')!==FALSE){
 				$warnings[$key][] = array(
 	                 array( 'mark', 'period', $key, $code ),
 	                 'translate-checks-chinese-period', // Needs to be defined in i18n file
-	                 array( 'PARAMS', '' ),
-	                 array( 'COUNT', '' ),
+
 	            );					
 			}
 			if(mb_strpos($translation, '：')!==FALSE){
 				$warnings[$key][] = array(
 	                 array( 'mark', 'colon', $key, $code ),
 	                 'translate-checks-chinese-colon', // Needs to be defined in i18n file
-	                 array( 'PARAMS', '' ),
-	                 array( 'COUNT', '' ),
+
 	            );					
 			}	
 			if(mb_strpos($translation, '!')!==FALSE){
 				$warnings[$key][] = array(
 	                 array( 'mark', 'exclaimation', $key, $code ),
 	                 'translate-checks-exclaimation-mark', // Needs to be defined in i18n file
-	                 array( 'PARAMS', '' ),
-	                 array( 'COUNT', '' ),
+
 	            );					
 			}				
 			if(mb_strpos($translation, '?')!==FALSE){
 				$warnings[$key][] = array(
 	                 array( 'mark', 'question', $key, $code ),
 	                 'translate-checks-question-mark', // Needs to be defined in i18n file
-	                 array( 'PARAMS', '' ),
-	                 array( 'COUNT', '' ),
+
 	            );					
 			}	
 			if(mb_strpos($translation, '...')!==FALSE){
 				$warnings[$key][] = array(
 	                 array( 'mark', 'ellipsis', $key, $code ),
 	                 'translate-checks-ellipsis', // Needs to be defined in i18n file
-	                 array( 'PARAMS', '' ),
-	                 array( 'COUNT', '' ),
+
 	            );					
 			}	
 			if(mb_strpos($translation, '.')!==FALSE){
 				$warnings[$key][] = array(
 	                 array( 'mark', 'period', $key, $code ),
 	                 'translate-checks-period', // Needs to be defined in i18n file
-	                 array( 'PARAMS', '' ),
-	                 array( 'COUNT', '' ),
 	            );					
 			}
 			if(mb_strpos($translation, ',')!==FALSE){
 				$warnings[$key][] = array(
 	                 array( 'mark', 'comma', $key, $code ),
 	                 'translate-checks-comma', // Needs to be defined in i18n file
-	                 array( 'PARAMS', '' ),
-	                 array( 'COUNT', '' ),
 	            );					
 			}
 			if(mb_strpos($translation, ':')!==FALSE){
 				$warnings[$key][] = array(
 	                 array( 'mark', 'colon', $key, $code ),
 	                 'translate-checks-colon', // Needs to be defined in i18n file
-	                 array( 'PARAMS', '' ),
-	                 array( 'COUNT', '' ),
 	            );					
 			}
 		}
