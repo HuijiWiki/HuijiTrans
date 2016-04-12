@@ -19,7 +19,7 @@ class SrtStylingChecker extends MessageChecker {
 			}
 			$dc = substr_count($defination, '- ');	
 			$tc = substr_count($translation, '-');
-			if ($tc != $dc){
+			if ( $dc>=2 && $tc != $dc){
 				$warnings[$key][] = array(
 	                 array( 'dialogue', 'balance', $key, $code ),
 	                 'translate-checks-dialogue', // Needs to be defined in i18n file
@@ -70,6 +70,12 @@ class SrtStylingChecker extends MessageChecker {
 				$warnings[$key][] = array(
 	                 array( 'mark', 'comma', $key, $code ),
 	                 'translate-checks-chinese-comma', // Needs to be defined in i18n file
+	            );				
+			}
+			if(mb_strpos($translation, '--')!==FALSE){
+				$warnings[$key][] = array(
+	                 array( 'mark', 'hyphen', $key, $code ),
+	                 'translate-checks-hyphen', // Needs to be defined in i18n file
 	            );				
 			}
 			if(mb_strpos($translation, '。')!==FALSE){

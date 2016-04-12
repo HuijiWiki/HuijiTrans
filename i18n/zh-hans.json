@@ -16,5 +16,6 @@
 	"translate-checks-dialogue":"同一段时间轴中出现两人对话的，应保留英文形式，以短横线表示说话人",
 	"translate-checks-dialogue-format":"短横线后应添加空格以区分，后一句短横线前也应该添加空格以区分",
 	"translate-checks-middot":"应对外国人名合理使用间隔号（·），不可使用点（.）作为间隔号。正确例子：乔佛里·拜拉席恩",
+	"translate-checks-hyphen":"破折号应采用中文半角标点符号（——）",
 	"contentaction-myact": "My action"
 }
