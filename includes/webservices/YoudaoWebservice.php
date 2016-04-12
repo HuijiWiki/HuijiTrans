@@ -17,6 +17,7 @@ class YoudaoWebService extends TranslationWebService {
    public function getType() {
        return 'mt';
    }
+   
  
    protected function mapCode( $code ) {
        $map = array(
