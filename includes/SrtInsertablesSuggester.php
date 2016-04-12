@@ -35,7 +35,7 @@ class SrtInsertablesSuggester {
         $insertables = array_merge( $insertables, $new );
 
         $matches = array();
-        $re = "/([\\d\\.]+)%/"; 
+        $re = "/([\\d\\.]*[\d])%/"; 
         preg_match_all(
            $re,
            $text,
@@ -48,7 +48,7 @@ class SrtInsertablesSuggester {
         $insertables = array_merge( $insertables, $new );
 
         $matches = array();
-        $re = "/([\\d\\.]+)/";
+        $re = "/([\\d\\.]*[\d])/";
         preg_match_all(
            $re,
            $text,
