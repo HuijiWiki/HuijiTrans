@@ -46,14 +46,14 @@ class SrtStylingChecker extends MessageChecker {
 			preg_match_all($re, $nb, $matches);	
 			if (count($matches) > 0 && count($matches[1])>0){
 				$cn = new ChineseNumber($matches[1][0]);
-				$params = array();
+				$params = $params2 = array();
 				$params[] = $cn;
-				$params[] = $matches[1][0];
+				$params2[] = $matches[1][0];
 				$warnings[$key][] = array(
 	                 array( 'number', 'chinese', $key, $code ),
 	                 'translate-checks-chinese-number', // Needs to be defined in i18n file
 	                 array( 'PARAMS', $params ),
-	                 array( 'COUNT', count($params) ),
+	                 array( 'PARAMS', $params2 ),
 	            );					
 			}	
 		}
