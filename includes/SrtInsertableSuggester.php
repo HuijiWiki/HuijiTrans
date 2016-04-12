@@ -22,14 +22,42 @@ class SrtInsertablesSuggester {
         $insertables = array_merge( $insertables, $new );
 
         $matches = array();
+        $re = "/([\\d\\.]+)\\/([\\d\\.]+)/"; 
         preg_match_all(
-           '/({{((?:PLURAL|GENDER|GRAMMAR):[^|]*)\|).*?(}})/i',
+           $re,
            $text,
            $matches,
            PREG_SET_ORDER
         );
         $new = array_map( function( $match ) {
-           return new Insertable( $match[2], $match[1], $match[3] );
+           return new Insertable( (string)new ChineseFraction($match[1], $match[2]), (string)new ChineseFraction($match[1], $match[2]) );
+        }, $matches );
+        $insertables = array_merge( $insertables, $new );
+
+        $matches = array();
+        $re = "/([\\d\\.]+)%/"; 
+        preg_match_all(
+           $re,
+           $text,
+           $matches,
+           PREG_SET_ORDER
+        );
+        $new = array_map( function( $match ) {
+           return new Insertable( (string)(new ChinesePercent($match[1])), (string)(new ChinesePercent($match[1])) );
+        }, $matches );
+        $insertables = array_merge( $insertables, $new );
+
+        $matches = array();
+        $re = "/([\\d\\.]+)/";
+        preg_match_all(
+           $re,
+           $text,
+           $matches,
+           PREG_SET_ORDER
+        );
+
+        $new = array_map( function( $match ) {
+           return new Insertable( (string)(new ChineseNumber($match[1])), (string)(new ChineseNumber($match[1])) );
         }, $matches );
         $insertables = array_merge( $insertables, $new );
 
