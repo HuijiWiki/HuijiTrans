@@ -21,6 +21,7 @@ TEMPLATE:
                 checks:
                         - numberCheck
                         - markCheck
+                        - dialogueCheck
                         - braceBalanceCheck
                         - balancedTagsCheck
         INSERTABLES:

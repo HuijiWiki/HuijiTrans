@@ -9,6 +9,30 @@
  */
 
 class SrtStylingChecker extends MessageChecker {
+	protected function dialogueCheck( $messages, $code, &$warnings ){
+		foreach( $messages as $message ){
+			$key = $message->key();
+			$translation = $message->translation();
+			$defination = $message->defination();
+			if ($code != 'zh'){
+				return;
+			}
+			$dc = substr_count($defination, '- ');	
+			$tc = substr_count($translation, '-');
+			if ($tc != $dc){
+				$warnings[$key][] = array(
+	                 array( 'dialogue', 'balance', $key, $code ),
+	                 'translate-checks-dialogue', // Needs to be defined in i18n file
+	            );					
+			}
+			elseif (preg_match("/-\\s.+\\s-\\s.+/", $dc) && !preg_match("/-\\s.+\\s-\\s.+/", $tc)){
+				$warnings[$key][] = array(
+	                 array( 'dialogue', 'balance', $key, $code ),
+	                 'translate-checks-dialogue-format', // Needs to be defined in i18n file
+	            );					
+			}
+		}		
+	}
 	protected function numberCheck( $messages, $code, &$warnings ){
 		foreach( $messages as $message ){
 			$key = $message->key();
@@ -101,6 +125,14 @@ class SrtStylingChecker extends MessageChecker {
 	                 'translate-checks-colon', // Needs to be defined in i18n file
 	            );					
 			}
+			if(mb_strpos($translation, '·')!==FALSE || mb_strpos($translation, '•')!==FALSE
+				|| mb_strpos($translation, '⋅')!==FALSE || mb_strpos($translation, '・')!==FALSE){
+				$warnings[$key][] = array(
+	                 array( 'mark', 'colon', $key, $code ),
+	                 'translate-checks-middot', // Needs to be defined in i18n file
+	            );					
+			}
+
 		}
 	} 
 }
