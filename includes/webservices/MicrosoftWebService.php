@@ -94,7 +94,7 @@ class MicrosoftWebService extends TranslationWebService {
        $pairs['en']['zh-CHS'] = true;
        $pairs['en']['zh-CHT'] = true;
        $pairs['zh-CHS']['en'] = true;
-       $pairs['zh-CHT']['en'] = true
+       $pairs['zh-CHT']['en'] = true;
        return $pairs;
    }
  
