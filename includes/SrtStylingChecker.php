@@ -13,7 +13,7 @@ class SrtStylingChecker extends MessageChecker {
 		foreach( $messages as $message ){
 			$key = $message->key();
 			$translation = $message->translation();
-			if ($code != 'zh'){
+			if ($code != 'zh' || $code != 'zh-cn' || $code != 'zh-hans'){
 				return;
 			}
 			$nb = str_replace(',', '' , $translation );
@@ -39,11 +39,11 @@ class SrtStylingChecker extends MessageChecker {
 			$key = $message->key();
 			$translation = $message->translation();
 			$definition = $message->definition();
-			if ($code != 'zh'){
+			if ($code != 'zh' || $code != 'zh-cn' || $code != 'zh-hans'){
 				return;
 			}
 			$dc = substr_count($definition, '- ');	
-			$tc = substr_count($translation, '- ');
+			$tc = substr_count($translation, '-');
 			if ( $dc >= 2 && $tc != $dc){
 				$warnings[$key][] = array(
 	                 array( 'dialogue', 'balance', $key, $code ),
