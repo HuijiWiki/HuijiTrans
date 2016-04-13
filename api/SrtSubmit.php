@@ -70,7 +70,7 @@ class ApiSrtSubmit extends ApiBase {
     $file_contents = str_replace("%label%",$label,$file_contents);
     $file_contents = str_replace("%description%",$description,$file_contents);
     file_put_contents($yml."{$id}.yml", $file_contents);
-    file_put_contents($structure."/{$language}.srt", file_get_contents($filename)) 
+    file_put_contents($structure."/{$language}.srt", file_get_contents($filename)); 
     $command = "php /var/www/virtual/".$HuijiPrefix."/extensions/Translate/scripts/processMessageChanges.php  --conf=/var/www/virtual/".$wgHuijiPrefix."/LocalSettings.php";
     exec($command);
     $responseBody = array(
