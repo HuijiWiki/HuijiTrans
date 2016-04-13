@@ -11,4 +11,10 @@ class HuijiTransHooks {
 		$files = array_merge( $file, glob(__DIR__.'/tests/phpuinit/*Test.php'));
 		return true;
 	}
+	public static function onSkinTemplateToolboxEnd( &$skinTemplate ){
+		$title = SpecialPage::getTitleFor('ManageMessageGroups');
+		$line = Linker::LinkKnown($title, '<i class="file-video-o"></i> 创建字幕翻译', array('class'=>'create-srt') );
+		echo Html::rawElement( 'li', array(), $line );
+		return true;
+	}
 }
