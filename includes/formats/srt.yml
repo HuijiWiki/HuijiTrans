@@ -35,12 +35,13 @@ LANGUAGES:
                 - en
                 - zh
         blacklist:
-                - zh-cn
                 - zh-tw
                 - zh-hk
                 - zh-sg
                 - zh-mo
                 - zh-my
+                - zh-hant
+                - zh-hans
 
         #AUTOLOAD:
         #       SrtMessageChecker: Checker.php

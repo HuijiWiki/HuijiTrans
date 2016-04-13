@@ -77,12 +77,22 @@ class ApiSrtSubmit extends ApiBase {
     file_put_contents($yml."/{$id}.yml", $file_contents);
     file_put_contents($structure."/{$language}.srt", file_get_contents($filename)); 
     $command = "php /var/www/virtual/".$wgHuijiPrefix."/extensions/Translate/scripts/processMessageChanges.php  --conf=/var/www/virtual/".$wgHuijiPrefix."/LocalSettings.php";
-    exec($command);
-    $responseBody = array(
-      'state'  => 200,
-      'message' => 'srt文件已导入',
-      'result' => '/wiki/特殊:信息组管理',
-    );
+    $output = $ret = '';
+    exec($command, $output, $ret);
+    if ($ret == 0){
+      $responseBody = array(
+        'state'  => 200,
+        'message' => 'success',
+        'result' => '/wiki/特殊:信息组管理',
+      );      
+    } else {
+      $responseBody = array(
+        'state'  => 500,
+        'message' => 'srt文件不合法。',
+        'result' => $output,
+      );        
+    }
+
     $result = $this->getResult();
     $result->addValue($this->getModuleName(),'res', $responseBody);
     return true;       
