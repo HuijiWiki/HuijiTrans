@@ -61,6 +61,33 @@ class SrtInsertablesSuggester {
         }, $matches );
         $insertables = array_merge( $insertables, $new );
 
+        $matches = array();
+        $re = "/(<.*?>)/";
+        preg_match_all(
+           $re,
+           $text,
+           $matches,
+           PREG_SET_ORDER
+        );
+
+        $new = array_map( function( $match ) {
+           return new Insertable( $match[1] , $match[1] );
+        }, $matches );
+        $insertables = array_merge( $insertables, $new );
+
+        $matches = array();
+        $re = "/({.*?})/";
+        preg_match_all(
+           $re,
+           $text,
+           $matches,
+           PREG_SET_ORDER
+        );
+
+        $new = array_map( function( $match ) {
+           return new Insertable( $match[1] , $match[1] );
+        }, $matches );
+        $insertables = array_merge( $insertables, $new );
         return $insertables;
     }
 }

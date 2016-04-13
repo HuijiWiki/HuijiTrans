@@ -239,6 +239,8 @@ abstract class TranslationWebService {
    protected function unwrapUntranslatable( $text ) {
        $text = str_replace( ';;', "\n\r", $text );
        $text = str_replace( ';', "\n", $text );
+       $text = str_replace( '，', " ", $text );
+       $text = str_replace( '。', " ", $text );
        $pattern = '~<span class="notranslate" translate="no">(.*?)</span>~';
        return preg_replace( $pattern, '\1', $text );
    }
