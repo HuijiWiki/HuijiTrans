@@ -224,8 +224,8 @@ abstract class TranslationWebService {
     * @return string
     */
    protected function wrapUntranslatable( $text ) {
-       $text = str_replace( "\n", '皯', $text );
-       $text = str_replace( "\r", '穵', $text );
+       $text = str_replace( "\n", ';', $text );
+       $text = str_replace( "\r", ';', $text );
        $pattern = '~%[^% ]+%|\$\d|{VAR:[^}]+}|{?{(PLURAL|GRAMMAR|GENDER):[^|]+\||%(\d\$)?[sd]~';
        $wrap = '<span class="notranslate" translate="no">\0</span>';
        return preg_replace( $pattern, $wrap, $text );
@@ -237,8 +237,8 @@ abstract class TranslationWebService {
     * @return string
     */
    protected function unwrapUntranslatable( $text ) {
-       $text = str_replace( '皯', "\n", $text );
-       $text = str_replace( '穵', "\r", $text );
+       $text = str_replace( ';;', "\n\r", $text );
+       $text = str_replace( ';', "\n", $text );
        $pattern = '~<span class="notranslate" translate="no">(.*?)</span>~';
        return preg_replace( $pattern, '\1', $text );
    }
