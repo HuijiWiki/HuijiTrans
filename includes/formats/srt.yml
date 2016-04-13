@@ -36,6 +36,13 @@ TEMPLATE:
                         - qqq
                         - en
                         - zh
+                blacklist:
+                        - zh-cn
+                        - zh-tw
+                        - zh-hk
+                        - zh-sg
+                        - zh-mo
+                        - zh-my
 
         #AUTOLOAD:
         #       SrtMessageChecker: Checker.php
