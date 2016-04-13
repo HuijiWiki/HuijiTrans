@@ -13,11 +13,11 @@ class SrtStylingChecker extends MessageChecker {
 		foreach( $messages as $message ){
 			$key = $message->key();
 			$translation = $message->translation();
-			$defination = $message->defination();
+			$definition = $message->definition();
 			if ($code != 'zh'){
 				return;
 			}
-			$dc = substr_count($defination, '- ');	
+			$dc = substr_count($definition, '- ');	
 			$tc = substr_count($translation, '-');
 			if ( $dc>=2 && $tc != $dc){
 				$warnings[$key][] = array(

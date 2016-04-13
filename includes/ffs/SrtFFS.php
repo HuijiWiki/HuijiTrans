@@ -54,7 +54,7 @@ class SrtFFS extends SimpleFFS {
             list($oldKey, $index, $start, $stop ) = self::teardownUnmangledKey($key);
             $value = $m->translation();
             $value = '\n';
-            $value = $m->defination();
+            $value = $m->definition();
             //$value = str_replace( TRANSLATE_FUZZY, '', $value );
             if (count($start)>0 && count($stop)>0){
                 $cue = new SubripCue($start[0], $stop[0], $value);
