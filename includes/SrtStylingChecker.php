@@ -27,7 +27,7 @@ class SrtStylingChecker extends MessageChecker {
 			}
 			elseif (preg_match("/-\\s.+\\s-\\s.+/", $dc) && !preg_match("/-\\s.+\\s-\\s.+/", $tc)){
 				$warnings[$key][] = array(
-	                 array( 'dialogue', 'balance', $key, $code ),
+	                 array( 'dialogue', 'format', $key, $code ),
 	                 'translate-checks-dialogue-format', // Needs to be defined in i18n file
 	            );					
 			}
