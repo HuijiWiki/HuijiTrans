@@ -19,13 +19,13 @@ class SrtStylingChecker extends MessageChecker {
 			}
 			$dc = substr_count($definition, '- ');	
 			$tc = substr_count($translation, '-');
-			if ( $dc>=2 && $tc != $dc){
+			if ( $dc >= 2 && $tc != $dc){
 				$warnings[$key][] = array(
 	                 array( 'dialogue', 'balance', $key, $code ),
 	                 'translate-checks-dialogue', // Needs to be defined in i18n file
 	            );					
 			}
-			elseif (preg_match("/-\\s.+\\s-\\s.+/", $dc) && !preg_match("/-\\s.+\\s-\\s.+/", $tc)){
+			elseif (preg_match("/-\\s.+\\s-\\s.+/", $definition) && !preg_match("/-\\s.+\\s-\\s.+/", $translation) ){
 				$warnings[$key][] = array(
 	                 array( 'dialogue', 'format', $key, $code ),
 	                 'translate-checks-dialogue-format', // Needs to be defined in i18n file
