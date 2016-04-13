@@ -38,6 +38,7 @@ class SrtStylingChecker extends MessageChecker {
 		foreach( $messages as $message ){
 			$key = $message->key();
 			$translation = $message->translation();
+			$definition = $message->definition();
 			if ($code != 'zh'){
 				return;
 			}
