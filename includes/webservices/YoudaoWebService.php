@@ -23,6 +23,7 @@ class YoudaoWebService extends TranslationWebService {
        $map = array(
            'zh-hant' => 'zh',
            'zh-hans' => 'zh',
+           'zh-cn' => 'zh',
        );
  
        return isset( $map[$code] ) ? $map[$code] : $code;
@@ -74,7 +75,12 @@ class YoudaoWebService extends TranslationWebService {
        // }
        $pairs = array();
        $pairs['zh']['en'] = true;
+       $pairs['zh-cn']['en'] = true;
+       $pairs['zh-hans']['en'] = true;
        $pairs['en']['zh'] = true;
+       $pairs['en']['zh-cn'] = true;
+       $pairs['en']['zh-hant'] = true;
+       $pairs['en']['zh-hans'] = true;
        return $pairs;
    }
  
