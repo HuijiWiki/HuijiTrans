@@ -1,0 +1,19 @@
+.tux-message-editor .infocolumn-block {
+    font-size: 12pt;
+    background: #FCFCFC;
+    position: absolute !important;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    padding: 0 !important;
+    -webkit-transition: width 0.5s !important;
+    transition: width 0.5s;
+}
+.tux-message-editor .editor-info-toggle {
+    padding: 15px !important;
+    cursor: pointer !important;
+    float: right !important;
+}
+.tux-message-editor .messagekey {
+	padding: 5px 0 5px 10px !important;
+}
