@@ -63,8 +63,12 @@ class ApiSrtSubmit extends ApiBase {
     $ymlTemplate = "/var/www/src/extensions/HuijiTrans/includes/formats/srt.yml";
     $structure = "/var/www/virtual/".$wgHuijiPrefix."/external/srt/{$id}";
     $oldmask = umask(0);
-    mkdir($yml, 0777,true);
-    mkdir($structure, 0777,true);
+    if (!file_exists($yml)){
+      mkdir($yml, 0777,true);
+    }
+    if (!file_exists($structure)){
+      mkdir($structure, 0777,true);
+    }
     umask($oldumask); 
     $file_contents = file_get_contents($ymlTemplate);
     $file_contents = str_replace("%id%",$id,$file_contents);
