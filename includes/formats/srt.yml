@@ -1,47 +1,46 @@
-TEMPLATE:
-        BASIC:
-                id: %id%
-                label: %label%
-                description: %description%
-                icon: wiki://SRT.png
-                namespace: NS_SRT
-                class: FileBasedMessageGroup
-                sourcelanguage: en
-        FILES:
-                class: SrtFFS
-                sourcePattern: %GROUPROOT%/srt/%id%/%CODE%.srt
-                targetPattern: %GROUPROOT%/srt/%id%/%CODE%.srt
-        MANGLER:
-                class: StringMatcher
-                patterns:
-                        - "*"
-                prefix: %id%  
-        CHECKER:
-                class: SrtStylingChecker
-                checks:
-                        - numberCheck
-                        - markCheck
-                        - braceBalanceCheck
-                        - balancedTagsCheck
-        INSERTABLES:
-                class: SrtInsertablesSuggester
-        TAGS:
-                optional:
-                        - optional_*
-                ignored:
-                        - ignored_*
-        LANGUAGES:
-                whitelist:
-                        - qqq
-                        - en
-                        - zh
-                blacklist:
-                        - zh-cn
-                        - zh-tw
-                        - zh-hk
-                        - zh-sg
-                        - zh-mo
-                        - zh-my
+BASIC:
+        id: %id%
+        label: %label%
+        description: %description%
+        icon: wiki://SRT.png
+        namespace: NS_SRT
+        class: FileBasedMessageGroup
+        sourcelanguage: en
+FILES:
+        class: SrtFFS
+        sourcePattern: %GROUPROOT%/srt/%id%/%CODE%.srt
+        targetPattern: %GROUPROOT%/srt/%id%/%CODE%.srt
+MANGLER:
+        class: StringMatcher
+        patterns:
+                - "*"
+        prefix: %id%- 
+CHECKER:
+        class: SrtStylingChecker
+        checks:
+                - numberCheck
+                - markCheck
+                - braceBalanceCheck
+                - balancedTagsCheck
+INSERTABLES:
+        class: SrtInsertablesSuggester
+TAGS:
+        optional:
+                - optional_*
+        ignored:
+                - ignored_*
+LANGUAGES:
+        whitelist:
+                - qqq
+                - en
+                - zh
+        blacklist:
+                - zh-cn
+                - zh-tw
+                - zh-hk
+                - zh-sg
+                - zh-mo
+                - zh-my
 
         #AUTOLOAD:
         #       SrtMessageChecker: Checker.php
