@@ -53,7 +53,7 @@ class SrtFFS extends SimpleFFS {
             $key = $mangler->unmangle( $key );
             list($oldKey, $index, $start, $stop ) = self::teardownUnmangledKey($key);
             $value = $m->translation();
-            $value .= '\n';
+            $value .= "\n";
             $value .= $m->definition();
             //$value = str_replace( TRANSLATE_FUZZY, '', $value );
             if (count($start)>0 && count($stop)>0){
