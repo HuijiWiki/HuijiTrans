@@ -52,8 +52,8 @@ class ApiSrtSubmit extends ApiBase {
     $label = $this->getMain()->getVal( 'id' );
     $description = $this->getMain()->getVal( 'description' );
     $file = $this->getMain()->getUpload( 'file' );
-    $language = $this->getMain()->getVal( 'file' );
-    if ($language == ''){
+    $language = $this->getMain()->getVal( 'language' );
+    if ($language == '' || !isset($language)){
       $language = 'en';
     }
     //@TODO There can't be duplicate ids
@@ -74,7 +74,7 @@ class ApiSrtSubmit extends ApiBase {
     $file_contents = str_replace("%id%",$id,$file_contents);
     $file_contents = str_replace("%label%",$label,$file_contents);
     $file_contents = str_replace("%description%",$description,$file_contents);
-    file_put_contents($yml."{$id}.yml", $file_contents);
+    file_put_contents($yml."/{$id}.yml", $file_contents);
     file_put_contents($structure."/{$language}.srt", file_get_contents($filename)); 
     $command = "php /var/www/virtual/".$wgHuijiPrefix."/extensions/Translate/scripts/processMessageChanges.php  --conf=/var/www/virtual/".$wgHuijiPrefix."/LocalSettings.php";
     exec($command);
