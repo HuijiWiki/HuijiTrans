@@ -14,7 +14,7 @@ class SrtStylingChecker extends MessageChecker {
 			$key = $message->key();
 			$translation = $message->translation();
 			if ($code != 'zh' || $code != 'zh-cn' || $code != 'zh-hans'){
-				return;
+				//continue;
 			}
 			$nb = str_replace(',', '' , $translation );
 			$re = "/(?:^|[^\\d])(\\d{1,2}0{2,})/u";
@@ -35,12 +35,13 @@ class SrtStylingChecker extends MessageChecker {
 		}
 	}
 	protected function markCheck( $messages, $code, &$warnings ){
+		//wfDebug('doing markcheck');
 		foreach( $messages as $message ){
 			$key = $message->key();
 			$translation = $message->translation();
 			$definition = $message->definition();
 			if ($code != 'zh' || $code != 'zh-cn' || $code != 'zh-hans'){
-				return;
+				//continue;
 			}
 			$dc = substr_count($definition, '- ');	
 			$tc = substr_count($translation, '-');
@@ -130,5 +131,6 @@ class SrtStylingChecker extends MessageChecker {
 			}
 
 		}
+		wfDebug('mark check'.count($warnings[$key]));
 	} 
 }

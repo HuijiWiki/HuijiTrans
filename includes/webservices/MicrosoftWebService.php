@@ -189,10 +189,15 @@ class AccessTokenAuthentication {
             //Close the Curl Session.
             curl_close($ch);
             //Decode the returned JSON string.
+
+            if($strResponse == false) throw new Exception("curl Error");
             $objResponse = json_decode($strResponse);
+	    
             if ($objResponse->error){
                 throw new Exception($objResponse->error_description);
             }
+	    
+
             return $objResponse->access_token;
         } catch (Exception $e) {
             echo "Exception-".$e->getMessage();
