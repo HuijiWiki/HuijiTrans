@@ -17,3 +17,7 @@
 .tux-message-editor .messagekey {
 	padding: 5px 0 5px 10px !important;
 }
+.tux-message-editor .close {
+    padding: 15px !important;
+    float: right !important;
+}
