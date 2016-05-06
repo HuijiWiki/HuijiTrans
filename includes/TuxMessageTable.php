@@ -1,4 +1,4 @@
-<?
+<?php
 class TuxMessageTable extends ContextSource {
 	protected $group;
 	protected $language;
