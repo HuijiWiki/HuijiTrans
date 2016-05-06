@@ -131,6 +131,5 @@ class SrtStylingChecker extends MessageChecker {
 			}
 
 		}
-		wfDebug('mark check'.count($warnings[$key]));
 	} 
 }
