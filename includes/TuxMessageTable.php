@@ -1,3 +1,4 @@
+<?
 class TuxMessageTable extends ContextSource {
 	protected $group;
 	protected $language;
@@ -59,4 +60,3 @@ HTML;
 		return $list . $loader . $actionbar;
 	}
 }
-Status API Training Shop Blog About
