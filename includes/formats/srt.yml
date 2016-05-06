@@ -26,9 +26,9 @@ INSERTABLES:
         class: SrtInsertablesSuggester
 TAGS:
         optional:
-                - [optional]*
+                - optional_*
         ignored:
-                - [ignored]*
+                - ignored_*
 LANGUAGES:
         whitelist:
                 - qqq

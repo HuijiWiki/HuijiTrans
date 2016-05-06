@@ -34,7 +34,7 @@ class SrtFFS extends SimpleFFS {
             $value = str_replace(PHP_EOL, " ", $cue->getText());
             $re = "/^[\\[(].+?[\\])]$/"; 
             if (preg_match($re, $value)){
-                $key = "[ignore]$key";
+                $key = "ignored_$key";
             }
             $value = $cue->getText();
             $messages[$key] = $value;
