@@ -21,3 +21,165 @@
     padding: 15px !important;
     float: right !important;
 }
+
+.tux-editor-header{
+    margin-top:2em!important;
+}
+
+.tux-breadcrumb{
+    text-align:center;
+    width:100%!important;
+}
+.grouptitle {
+    float: none!important;
+}
+.description{
+    text-align:center;
+}
+.ext-translate-language-selector{
+    display:none;
+}
+.tux-messagetable-header {
+    border-bottom: 1px solid #32a7a2;
+    margin-bottom: 10px!important;
+}
+#wiki-body .tux-message-selector .column {
+    margin-bottom: 0;
+    background:none;
+}
+.tux-message-selector li.selected {
+    border-bottom: 2px solid #32a7a2;
+}
+.tux-message-selector li.selected a {
+    color: #32a7a2;
+}
+.tux-message-selector li {
+    font-size:14px;
+    padding: 0px 30px!important;
+}
+.tux-message-selector li a{
+    color:#999;
+}
+.tux-message-item {
+    padding: 10px 20px;
+    max-height: none;
+    height: inherit;
+}
+.tux-list-edit {
+    display: none;
+}
+
+.tux-message-editor {
+    border: none;
+    position: relative;
+    bottom: 2px;
+    box-shadow: 0 0 10px rgba(0,0,0,.2);
+    background: #fff;
+}
+.tux-message-editor .infocolumn-block{
+    background:#fff;
+}
+.tux-textarea-translation {
+    border: 1px solid #32a7a2!important;
+    resize: none!important;
+}
+.tux-message-editor .button {
+    font-size: 14px;
+    border-radius: 0;
+    font-weight: 100;
+}
+.tux-editor-skip-button {
+    background: none!important;
+    border: none!important;
+}
+.tux-list-status {
+    float: right!important;
+}
+.tux-list-message,.tux-list-translation{
+    color:#999;
+}
+.tm-suggestion{
+    border: none;
+    border-top: 1px solid #e0e0e0;
+    box-shadow: none!important;
+    background: #fff;
+}
+.row.help {
+    position: absolute;
+    bottom: 0;
+}
+.infocolumn-block .caret{
+    display:none;
+}
+
+
+
+.header-editor-column{
+    text-align: center;
+}
+.header-editor-column .messagekey{
+    width: 100%!important;
+}
+.tux-message-editor .infocolumn-block{
+    position: relative!important;
+    left: 0;
+    right: auto!important;
+    min-height: 300px!important;
+}
+.tux-message-tools-menu{
+    right: 0;
+    top: 0;
+}
+.source-message-title{
+    padding: 10px 0;
+    font-weight: bold;
+}
+.source-message-content{
+    padding: 5px 15px;
+    border-top: 1px solid #e0e0e0;
+}
+.help {
+    display: none;
+}
+.message-desc-control{
+    display: none;
+}
+.tux-message-editor .editcolumn{
+    padding-right: 20px!important;
+}
+.editcolumn .sourcemessage{
+    display: none;
+}
+.tux-message-editor .editarea{
+    width: 100%!important;
+}
+#wiki-body .tux-textarea-translation{
+    float: right;
+}
+#wiki-body .tux-editor-paste-original-button{
+    float: right;
+}
+#wiki-body .tux-editor-control-buttons{
+    text-align: right;
+}
+#wiki-body .shortcutinfo{
+    text-align: right;
+}
+#wiki-body .tux-message-editor .layout-actions{
+    float: right;
+}
+#wiki-body .layout-actions .close{
+    position: relative;
+    bottom: 20px;
+}
+#wiki-body .editor-expand {
+    display: none;
+}
+#wiki-body .tux-message-item-compact {
+    max-width: none;
+    padding: 30px;
+    line-height: 1;
+}
+#wiki-body .tux-pagemode-edit{
+    height: auto;
+}

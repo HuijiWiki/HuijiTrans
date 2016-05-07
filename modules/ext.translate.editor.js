@@ -72,8 +72,9 @@
 			this.$editor = $( '<div>' )
 				.addClass( 'row tux-message-editor hide' )
 				.append(
-					this.prepareEditorColumn(),
-					this.prepareInfoColumn()
+                    this.headerEditorColumn(),
+					this.prepareInfoColumn(),
+                    this.prepareEditorColumn()
 				);
 
 			this.expanded = false;
@@ -376,12 +377,34 @@
 				.append( $historyItem, $deleteItem, $translationsItem );
 		},
 
+        headerEditorColumn: function(){
+            var $header = $('<div>').addClass('header-editor-column clear'),
+                $messageKeyLabel,$messageTools = this.createMessageTools();
+
+            $messageKeyLabel = $( '<div>' )
+                .addClass( 'ten columns messagekey' )
+                .text( this.message.title )
+                .append(
+                $( '<span>' ).addClass( 'caret' ),
+                $messageTools
+            )
+                .on( 'click', function ( e ) {
+                    $messageTools.toggleClass( 'hide' );
+                    e.stopPropagation();
+                } );
+
+
+            $header.append($messageKeyLabel);
+
+            return $header;
+
+        },
+
 		prepareEditorColumn: function () {
 			var translateEditor = this,
 				sourceString,
 				originalTranslation,
 				$editorColumn,
-				$messageKeyLabel,
 				$moreWarningsTab,
 				$warnings,
 				$warningsBlock,
@@ -401,23 +424,11 @@
 				$infoToggleIcon,
 				$messageList,
 				targetLangAttrib, targetLangDir, targetLangCode,
-				$messageTools = translateEditor.createMessageTools(),
 				canTranslate = mw.translate.canTranslate();
 
 			$editorColumn = $( '<div>' )
 				.addClass( 'seven columns editcolumn' );
 
-			$messageKeyLabel = $( '<div>' )
-				.addClass( 'ten columns messagekey' )
-				.text( this.message.title )
-				.append(
-					$( '<span>' ).addClass( 'caret' ),
-					$messageTools
-				)
-				.on( 'click', function ( e ) {
-					$messageTools.toggleClass( 'hide' );
-					e.stopPropagation();
-				} );
 
 			$closeIcon = $( '<span>' )
 				.addClass( 'one column close' )
@@ -443,7 +454,7 @@
 
 			$editorColumn.append( $( '<div>' )
 				.addClass( 'row' )
-				.append( $messageKeyLabel, $layoutActions )
+				.append(  $layoutActions )
 			);
 
 			$messageList = $( '.tux-messagelist' );
@@ -858,12 +869,20 @@
 				$messageDescSaveButton, $messageDescCancelButton,
 				$messageDescViewer,
 				$infoColumn = $( '<div>' ).addClass( 'infocolumn' ),
-				translateEditor = this;
+				translateEditor = this,$sourceMessage,
+                source = this.message.definition;
 
 			$infoColumn.append( $( '<div>' )
 				.addClass( 'row loading' )
 				.text( mw.msg( 'tux-editor-loading' ) )
 			);
+
+            $sourceMessage = $('<div>')
+                .addClass('row source-message')
+                .append(
+                    '<div class="source-message-title">原文</div><div class="source-message-content">'+source+'</div>'
+            )
+
 
 			if ( mw.config.get( 'wgTranslateDocumentationLanguageCode' ) ) {
 				$messageDescSaveButton = $( '<button>' )
@@ -939,6 +958,8 @@
 			$infoColumn.append( $( '<div>' )
 				.addClass( 'row uneditable-documentation hide' )
 			);
+
+            $infoColumn.append($sourceMessage);
 
 			$infoColumn.append( $( '<div>' )
 				.addClass( 'row tm-suggestions-title hide' )
