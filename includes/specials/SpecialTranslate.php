@@ -216,7 +216,7 @@ class SpecialTranslate extends SpecialPage {
 		$request = $this->getRequest();
 		$isBeta = self::isBeta( $request );
 		$defaults = array(
-			/* str  */'taction'  => 'translate',
+			/* str  */'taction'  => 'page',
 			/* str  */'task'     => $isBeta ? 'custom' : 'untranslated',
 			/* str  */'language' => $this->getLanguage()->getCode(),
 			/* str  */'group'    => $isBeta ? '!additions' : '',
@@ -410,6 +410,9 @@ class SpecialTranslate extends SpecialPage {
 			// tux-tab-translated
 			// tux-tab-unproofread
 			$tabClass = "tux-tab-$tab";
+			if ($tab == 'unproofread'){
+				$params['action'] = 'proofread';
+			}
 			$taskParams = array( 'filter' => $filter ) + $params;
 			ksort( $taskParams );
 			$href = $this->getPageTitle()->getLocalUrl( $taskParams );
@@ -443,10 +446,10 @@ class SpecialTranslate extends SpecialPage {
 		}
 		$container .= Html::closeElement( 'ul' );
 		// @todo FIXME: Hard coded "ellipsis".
-		$output .= Html::openElement( 'li', array( 'class' => 'column more' ) ) .
-			'...' .
-			$container .
-			Html::closeElement( 'li' );
+		// $output .= Html::openElement( 'li', array( 'class' => 'column more' ) ) .
+		// 	'...' .
+		// 	$container .
+		// 	Html::closeElement( 'li' );
 		$output .= Html::closeElement( 'ul' );
 		$output .= Html::closeElement( 'div' ); //close nine columns
 		$output .= Html::openElement( 'div', array( 'class' => 'three columns' ) );
