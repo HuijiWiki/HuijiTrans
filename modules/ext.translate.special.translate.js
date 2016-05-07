@@ -307,6 +307,12 @@
 			if ( $this.hasClass( 'more' ) ) {
 				return false;
 			}
+			if ( $this.hasClass( 'tux-tab-unproofread' ) && !$this.hasClass( 'selected' ) ){
+				return true;
+			}
+			if ( $('tux-tab-unproofread').hasClass('selected') && !$this.hasClass( 'selected') ){
+				return true;
+			}
 
 			newFilter = $this.data( 'filter' );
 
