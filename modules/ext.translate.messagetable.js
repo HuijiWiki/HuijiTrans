@@ -10,7 +10,7 @@
 			clearTimeout( timer );
 			timer = setTimeout( callback, milliseconds );
 		};
-	}() );
+	} () );
 
 	itemsClass = {
 		proofread: '.tux-message-proofread',
@@ -259,7 +259,8 @@
 							$( '<a>' )
 								.attr( {
 									title: mw.msg( 'translate-edit-title', message.key ),
-									href: mw.util.getUrl( message.title, { action: 'edit' } )
+									href: ( new mw.Uri( mw.util.getUrl( message.title ) ) )
+										.extend( { action: 'edit' } )
 								} )
 								.text( mw.msg( 'tux-edit' ) )
 						)
@@ -330,7 +331,7 @@
 		/**
 		 * Search the message filter
 		 *
-		 * @param {string} query
+		 * @param {String} query
 		 */
 		search: function ( query ) {
 			var $note, $button, $result,
@@ -377,7 +378,8 @@
 					.find( '.advanced-search' )
 					.text( mw.msg( 'tux-message-filter-result', resultCount, query ) );
 				$result.find( 'button' ).on( 'click', function () {
-					window.location.href = mw.util.getUrl( 'Special:SearchTranslations', { query: query } );
+					window.location.href = new mw.Uri( mw.util.getUrl( 'Special:SearchTranslations' ) )
+						.extend( { query: query } );
 				} );
 			}
 
@@ -470,12 +472,12 @@
 						messageTable.search( query );
 					}
 
-					if ( result[ 'query-continue' ] === undefined ) {
+					if ( result['query-continue'] === undefined ) {
 						// End of messages
 						messageTable.$loader.data( 'offset', -1 )
 							.addClass( 'hide' );
 					} else {
-						messageTable.$loader.data( 'offset', result[ 'query-continue' ].messagecollection.mcoffset );
+						messageTable.$loader.data( 'offset', result['query-continue'].messagecollection.mcoffset );
 
 						remaining = result.query.metadata.remaining;
 
@@ -520,10 +522,9 @@
 		/**
 		 * Creates a uniformly styled button for different actions,
 		 * shown when there are no messages to display.
-		 *
-		 * @param {string} labelMsg A message key for the button label.
+		 * @param {String} labelMsg A message key for the button label.
 		 * @param {Function} callback A callback for clicking the button.
-		 * @return {jQuery} A button element.
+		 * @returns {jQuery} A button element.
 		 */
 		otherActionButton: function ( labelMsg, callback ) {
 			return $( '<button>' )
@@ -776,7 +777,7 @@
 			}
 
 			if ( typeof options === 'string' ) {
-				data[ options ].call( $this );
+				data[options].call( $this );
 			}
 		} );
 	};
@@ -788,21 +789,17 @@
 	};
 
 	$( 'document' ).ready( function () {
-		var api = new mw.Api();
-
 		// Currently used only in the pre-TUX editor
 		$( '.mw-translate-messagereviewbutton' ).click( function () {
 			var $b, successFunction, failFunction, params;
 			$b = $( this );
 
 			successFunction = function ( data ) {
-				var reason;
-
 				if ( data.error ) {
 					// Give grep a chance to find the usages:
 					// api-error-invalidrevision, api-error-unknownmessage,
 					// api-error-fuzzymessage, api-error-owntranslation
-					reason = mw.msg( 'api-error-' + data.error.code );
+					var reason = mw.msg( 'api-error-' + data.error.code );
 					$b.val( mw.msg( 'translate-messagereview-failure', reason ) );
 				} else {
 					$b.val( mw.msg( 'translate-messagereview-done' ) );
@@ -815,21 +812,20 @@
 
 			params = {
 				action: 'translationreview',
+				token: $b.data( 'token' ),
 				revision: $b.data( 'revision' )
 			};
 			$b.val( mw.msg( 'translate-messagereview-progress' ) );
 			$b.prop( 'disabled', true );
 
-			// Change to csrf when support for MW 1.25 is dropped
-			api.postWithToken( 'edit', params ).done( successFunction ).fail( failFunction );
+			new mw.Api().post( params ).done( successFunction ).fail( failFunction );
 		} );
 	} );
 
 	/**
-	 * Escape the search query for regex match.
-	 *
+	 * Escape the search query for regex match
 	 * @param {string} value A search string to be escaped.
-	 * @return {string} Escaped string that is safe to use for a search.
+	 * @returns {string} Escaped string that is safe to use for a search.
 	 */
 	function escapeRegex( value ) {
 		return value.replace( /[\-\[\]{}()*+?.,\\\^$\|#\s]/g, '\\$&' );
