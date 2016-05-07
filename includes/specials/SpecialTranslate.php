@@ -396,7 +396,7 @@ class SpecialTranslate extends SpecialPage {
 			'all' => '',
 			'untranslated' => '!translated',
 			//'Hardest',
-			'outdated' => 'fuzzy',
+			//'outdated' => 'fuzzy',
 			'translated' => 'translated',
 			'unproofread' => "translated|!reviewer:$userId|!last-translator:$userId",
 		);
@@ -412,6 +412,8 @@ class SpecialTranslate extends SpecialPage {
 			$tabClass = "tux-tab-$tab";
 			if ($tab == 'unproofread'){
 				$params['action'] = 'proofread';
+			} else {
+				$params['action'] = 'page';
 			}
 			$taskParams = array( 'filter' => $filter ) + $params;
 			ksort( $taskParams );
