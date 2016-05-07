@@ -224,7 +224,7 @@ abstract class TranslationWebService {
     * @return string
     */
    protected function wrapUntranslatable( $text ) {
-       // $text = str_replace( PHP_EOL, ';', $text );
+       $text = str_replace( PHP_EOL, '', $text );
        $pattern = "/(<.*?>)/";
        $text = preg_replace($pattern, '', $text);
        $pattern = "/({.*?})/";
