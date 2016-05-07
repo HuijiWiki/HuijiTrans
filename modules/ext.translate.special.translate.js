@@ -310,7 +310,7 @@
 			if ( $this.hasClass( 'tux-tab-unproofread' ) && !$this.hasClass( 'selected' ) ){
 				return true;
 			}
-			if ( $('tux-tab-unproofread').hasClass('selected') && !$this.hasClass( 'selected') ){
+			if ( $('.tux-tab-unproofread').hasClass('selected') && !$this.hasClass( 'selected' ) ){
 				return true;
 			}
 
