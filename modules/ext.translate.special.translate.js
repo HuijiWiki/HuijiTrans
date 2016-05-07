@@ -293,9 +293,9 @@
 
 		$translateContainer = $( '.ext-translate-container' );
 
-		// if ( mw.translate.canProofread() ) {
-		// 	$translateContainer.find( '.proofread-mode-button' ).removeClass( 'hide' );
-		// }
+		if ( mw.translate.canProofread() ) {
+			$translateContainer.find( '.proofread-mode-button' ).removeClass( 'hide' );
+		}
 
 		$hideTranslatedButton = $translateContainer.find( '.tux-editor-clear-translated' );
 		$hideTranslatedButton
