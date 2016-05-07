@@ -784,7 +784,7 @@
 	$.fn.messagetable.Constructor = MessageTable;
 
 	$.fn.messagetable.defaults = {
-		mode: new mw.Uri().query.action || 'translate'
+		mode: new mw.Uri().query.action || 'page'
 	};
 
 	$( 'document' ).ready( function () {
