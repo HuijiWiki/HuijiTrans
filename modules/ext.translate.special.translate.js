@@ -255,8 +255,8 @@
 		$( '.tux-breadcrumb .grouplink' ).msggroupselector( {
 			onSelect: mw.translate.changeGroup,
 			language: state.language,
-			position: position,
-			recent: mw.translate.recentGroups.get()
+			position: position//,
+			//recent: mw.translate.recentGroups.get()
 		} );
 
 		updateGroupInformation( state );
