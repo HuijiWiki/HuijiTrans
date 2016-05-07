@@ -872,16 +872,18 @@
 				translateEditor = this,$sourceMessage,
                 source = this.message.definition;
 
-			$infoColumn.append( $( '<div>' )
-				.addClass( 'row loading' )
-				.text( mw.msg( 'tux-editor-loading' ) )
-			);
-
             $sourceMessage = $('<div>')
                 .addClass('row source-message')
                 .append(
                     '<div class="source-message-title">原文</div><div class="source-message-content">'+source+'</div>'
-            )
+            );
+            $infoColumn.append($sourceMessage);
+
+
+			$infoColumn.append( $( '<div>' )
+				.addClass( 'row loading' )
+				.text( mw.msg( 'tux-editor-loading' ) )
+			);
 
 
 			if ( mw.config.get( 'wgTranslateDocumentationLanguageCode' ) ) {
@@ -958,8 +960,6 @@
 			$infoColumn.append( $( '<div>' )
 				.addClass( 'row uneditable-documentation hide' )
 			);
-
-            $infoColumn.append($sourceMessage);
 
 			$infoColumn.append( $( '<div>' )
 				.addClass( 'row tm-suggestions-title hide' )

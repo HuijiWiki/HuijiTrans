@@ -124,7 +124,10 @@
     position: relative!important;
     left: 0;
     right: auto!important;
-    min-height: 300px!important;
+}
+#wiki-body .infocolumn{
+    position: relative;
+    padding-bottom: 20px;
 }
 .tux-message-tools-menu{
     right: 0;
@@ -144,8 +147,12 @@
 .message-desc-control{
     display: none;
 }
-.tux-message-editor .editcolumn{
-    padding-right: 20px!important;
+#wiki-body .infocolumn{
+    padding-left: 20px;
+}
+#wiki-body .editcolumn{
+    padding-right: 20px;
+    padding-bottom: 10px;
 }
 .editcolumn .sourcemessage{
     display: none;
@@ -177,9 +184,34 @@
 }
 #wiki-body .tux-message-item-compact {
     max-width: none;
-    padding: 30px;
+    padding: 30px 0;
     line-height: 1;
+    margin-top: 0;
+    border: none;
+    border-bottom: 1px solid #e0e0e0;
 }
 #wiki-body .tux-pagemode-edit{
     height: auto;
+}
+#wiki-body .untranslated{
+    display: none;
+}
+#wiki-body .tux-pagemode-source{
+    width: 50%;
+}
+#wiki-body .tux-pagemode-translation {
+    padding: 0 20px;
+    width: 50%;
+}
+#wiki-body .tux-pagemode-status{
+    display: none;
+}
+#wiki-body .tux-editor-control-buttons .button {
+    float: right;
+    padding: 0 20px;
+    font-size: 12px;
+    height: 30px;
+}
+#mw-debug-html{
+    display: none;
 }
