@@ -86,6 +86,9 @@ class ApiSrtSubmit extends ApiBase {
         'result' => '/wiki/特殊:信息组管理',
       );      
     } else {
+      //remove invalid file
+      unlink($structure."/{$language}.srt");
+      unlink($yml."/{$id}.yml");
       $responseBody = array(
         'state'  => 500,
         'message' => 'srt文件不合法。',

@@ -224,8 +224,7 @@ abstract class TranslationWebService {
     * @return string
     */
    protected function wrapUntranslatable( $text ) {
-       $text = str_replace( "\n", ';', $text );
-       $text = str_replace( "\r", ';', $text );
+       // $text = str_replace( PHP_EOL, ';', $text );
        $pattern = "/(<.*?>)/";
        $text = preg_replace($pattern, '', $text);
        $pattern = "/({.*?})/";
@@ -241,8 +240,7 @@ abstract class TranslationWebService {
     * @return string
     */
    protected function unwrapUntranslatable( $text ) {
-       $text = str_replace( ';;', "\n\r", $text );
-       $text = str_replace( ';', "\n", $text );
+       // $text = str_replace( ';', PHP_EOL, $text );
        $text = str_replace( '，', " ", $text );
        $text = str_replace( '。', " ", $text );
        $pattern = '~<span class="notranslate" translate="no">(.*?)</span>~';

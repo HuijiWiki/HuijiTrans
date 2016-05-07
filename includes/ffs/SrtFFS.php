@@ -31,6 +31,11 @@ class SrtFFS extends SimpleFFS {
         foreach( $cues as $index => $cue ){
             //@todo fuzzy handler
             $key = self::buildUnmangledKey($index, (string)$cue->getStart(), (string)$cue->getStop());
+            $value = str_replace(PHP_EOL, " ", $cue->getText());
+            $re = "/^[\\[(].+?[\\])]$/"; 
+            if (preg_match($re, $value)){
+                $key = "ignored_$key";
+            }
             $value = $cue->getText();
             $messages[$key] = $value;
         }
@@ -53,7 +58,7 @@ class SrtFFS extends SimpleFFS {
             $key = $mangler->unmangle( $key );
             list($oldKey, $index, $start, $stop ) = self::teardownUnmangledKey($key);
             $value = $m->translation();
-            $value .= "\r\n";
+            $value .= PHP_EOL;
             $value .= $m->definition();
             //$value = str_replace( TRANSLATE_FUZZY, '', $value );
             if (count($start)>0 && count($stop)>0){
