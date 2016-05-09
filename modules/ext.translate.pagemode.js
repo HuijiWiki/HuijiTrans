@@ -62,11 +62,13 @@
 			}
 
 			targetLangDir = $.uls.data.getDir( targetLangAttrib );
-
-			this.$message.append(
+            var re = /序号：(\d*?)[\s_]/;
+            var rs = re.exec(this.message.key)[1];
+            this.$message.append(
 				$( '<div>' )
 					.addClass( 'row tux-message-item-compact message' )
 					.append(
+                    $('<div>').addClass('translate-order').text(rs),
 						$( '<div>' )
 							.addClass( 'one column tux-pagemode-status ' + this.message.properties.status ),
 						$( '<div>' )
