@@ -398,7 +398,7 @@ class SpecialTranslate extends SpecialPage {
 			//'Hardest',
 			//'outdated' => 'fuzzy',
 			'translated' => 'translated',
-			'unproofread' => "translated|!reviewer:$userId|!last-translator:$userId",
+			'unproofread' => "",
 		);
 		$params = $this->nondefaults;
 		$params['task'] = 'custom';
