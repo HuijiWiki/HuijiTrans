@@ -6,5 +6,6 @@ $(function(){
     $('#wiki-body').on('click','.source-message-content',function(){
         var content = $(this).text();
         $(this).parents('.tux-message-editor').find('.tux-textarea-translation').val(content);
-    })
+    });
+    console.log(mw.msg( 'translate-statsbar-tooltip-with-fuzzy'));
 })
