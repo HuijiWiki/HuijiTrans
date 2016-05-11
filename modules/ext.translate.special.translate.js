@@ -308,10 +308,12 @@
 				return false;
 			}
 			if ( $this.hasClass( 'tux-tab-unproofread' ) && !$this.hasClass( 'selected' ) ){
-				return true;
+				//switchmode
+				$( '.tux-messagelist' ).messagetable().data('messagetable').switchMode( 'proofread' );
 			}
 			if ( $('.tux-tab-unproofread').hasClass('selected') && !$this.hasClass( 'selected' ) ){
-				return true;
+				$( '.tux-messagelist' ).messagetable().data('messagetable').switchMode( 'page' );
+				//return true;
 			}
 
 			newFilter = $this.data( 'filter' );
