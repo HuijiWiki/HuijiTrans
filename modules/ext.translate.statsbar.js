@@ -144,6 +144,15 @@
 					.text( mw.msg( 'translate-statsbar-tooltip',
 						translated.toFixed(), proofread.toFixed() ) );
 			}
+            if($('.progress-wrap').length == 0) {
+                $('.ext-translate-container').prepend(
+                    $('<div>').addClass('progress-wrap').append(
+                        $('<span>').addClass('progress-translated').text(translated.toFixed() + '% 已翻译'),
+                        $('<span>').addClass('progress-checked').text(proofread.toFixed() + '% 已复核')
+                    )
+                )
+            }
+
 		},
 
 		getStatsForGroup: function ( group ) {

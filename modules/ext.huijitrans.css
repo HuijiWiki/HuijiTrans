@@ -289,6 +289,21 @@
 #wiki-body .tux-editor-paste-original-button{
     display: none;
 }
+.ext-translate-container{
+    position: relative;
+}
+.progress-wrap{
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+.progress-translated{
+    color: #09c;
+    margin-right: 20px;
+}
+.progress-checked{
+    color: #32a7a2;
+}
 #mw-debug-html{
     display: none;
 }
