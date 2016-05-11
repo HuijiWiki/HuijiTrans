@@ -759,6 +759,128 @@
 			} else if ( isActionBarFloating && needsActionBarFloat ) {
 				this.$actionBar.width( messageListWidth );
 			}
+		},
+
+		/** 
+		 * Go to a specific line
+		 */
+		goTo: function( line ){
+			var remaining,
+				query,
+				messageTable = this,
+				$messageList = $( '.tux-messagelist' ),
+				offset = this.$loader.data( 'offset' ),
+				filter = messageTable.$loader.data( 'filter' ),
+				targetLangCode = $messageList.data( 'targetlangcode' ),
+				messagegroup = messageTable.$loader.data( 'messagegroup' ),
+				pageSize = messageTable.$loader.data( 'pagesize' );
+
+			if ( offset === -1 ) {
+				return;
+			}
+
+			if ( messageTable.loading ) {
+				// Avoid duplicate loading - the offset will be wrong and it will result
+				// in duplicate messages shown in the page
+				return;
+			}
+			messageTable.loading = true;
+			var line = 13;
+			var loaded = false;
+			while(!loaded){
+				$('.tux-message').each( function(index, element){
+					var order = $(element).find('.translate-order').html();
+					if (order == line){
+						$(element).data( 'translateeditor' ).show();
+						loaded = true;
+						if ( $( document ).height() -
+							( $( window ).height() + window.pageYOffset + $(element).height() ) > 0
+						) {
+							$( 'html, body' ).stop().animate( {
+								scrollTop: $( '.tux-message-editor:visible' ).offset().top - 85
+							}, 500 );
+						}
+					}
+					//console.log(index+' '+element+' '+order);
+				});
+				if (!loaded){
+					//this.load();
+					$( '.tux-messagelist' ).messagetable().data('messagetable').load();
+				}				
+			}
+
+
+			mw.translate.getMessages( messagegroup, targetLangCode, offset, pageSize, filter )
+				.done( function ( result ) {
+					var messages = result.query.messagecollection,
+						state;
+
+					if ( !messageTable.loading ) {
+						// reject. This was cancelled.
+						return;
+					}
+
+					messageTable.loading = false;
+
+					if ( messages.length === 0 ) {
+						// And this is the first load for the filter...
+						if ( messageTable.$container.children().length === 0 ) {
+							messageTable.displayEmptyListHelp();
+						}
+					}
+
+					$.each( messages, function ( index, message ) {
+						message.group = messagegroup;
+						messageTable.add( message );
+						messageTable.messages.push( message );
+
+						if ( index === 0 && messageTable.mode === 'translate' ) {
+							$( '.tux-message:first' ).data( 'translateeditor' ).init();
+						}
+					} );
+
+					state = result.query.metadata && result.query.metadata.state;
+					$( '.tux-workflow' ).workflowselector( messagegroup, targetLangCode, state );
+
+					// Dynamically loaded messages should pass the search filter if present.
+					query = $( '.tux-message-filter-box' ).val();
+
+					if ( query ) {
+						messageTable.search( query );
+					}
+
+					if ( result['query-continue'] === undefined ) {
+						// End of messages
+						messageTable.$loader.data( 'offset', -1 )
+							.addClass( 'hide' );
+					} else {
+						messageTable.$loader.data( 'offset', result['query-continue'].messagecollection.mcoffset );
+
+						remaining = result.query.metadata.remaining;
+
+						$( '.tux-messagetable-loader-count' ).text(
+							mw.msg( 'tux-messagetable-more-messages', remaining )
+						);
+
+						$( '.tux-messagetable-loader-more' ).text(
+							mw.msg( 'tux-messagetable-loading-messages', Math.min( remaining, pageSize ) )
+						);
+
+						// Make sure the floating toolbars are visible without the need for scroll
+						$( window ).trigger( 'scroll' );
+					}
+
+					messageTable.updateLastMessage();
+				} )
+				.fail( function ( errorCode, response ) {
+					if ( response.error && response.error.code === 'mctranslate-language-disabled' ) {
+						$( '.tux-editor-header .group-warning' )
+							.text( mw.msg( 'translate-language-disabled' ) )
+							.show();
+					}
+					messageTable.$loader.data( 'offset', -1 ).addClass( 'hide' );
+					messageTable.loading = false;
+				} );			
 		}
 	};
 

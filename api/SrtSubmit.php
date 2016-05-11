@@ -75,7 +75,7 @@ class ApiSrtSubmit extends ApiBase {
     $file_contents = str_replace("%label%",$label,$file_contents);
     $file_contents = str_replace("%description%",$description,$file_contents);
     file_put_contents($yml."/{$id}.yml", $file_contents);
-    $text =  file_get_contents($filename)；
+    $text =  file_get_contents($filename);
     $text = iconv(mb_detect_encoding($text, mb_detect_order(), true), "UTF-8", $text);
     file_put_contents($structure."/{$language}.srt", $text); 
     $command = "php /var/www/virtual/".$wgHuijiPrefix."/extensions/Translate/scripts/processMessageChanges.php  --conf=/var/www/virtual/".$wgHuijiPrefix."/LocalSettings.php";

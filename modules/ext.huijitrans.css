@@ -292,3 +292,6 @@
 #mw-debug-html{
     display: none;
 }
+.skin-bootstrap-mediawiki .tux-messagetable-header.floating {
+    top: 50px;
+}
