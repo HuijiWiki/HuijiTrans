@@ -765,11 +765,42 @@
 		 * Go to a specific line
 		 */
 		goTo: function( line ){
+			var loaded = false;			
+			$('.tux-message').each( function(index, element){
+				var order = $(element).find('.translate-order').html();
+				if (order == line){
+					$(element).data( 'translateeditor' ).show();
+					loaded = true;
+					if ( $( document ).height() -
+						( $( window ).height() + window.pageYOffset + $(element).height() ) > 0
+					) {
+						$( 'html, body' ).stop().animate( {
+							scrollTop: $( '.tux-message-editor:visible' ).offset().top - 85
+						}, 500 );
+					}
+				}
+				return order;
+				//console.log(index+' '+element+' '+order);
+			});
+			if (!loaded){
+				//this.load();
+				if ( $( document ).height() -
+					( $( window ).height() + window.pageYOffset + $('.last-message').height() ) > 0
+				) {
+					$( 'html, body' ).stop().animate( {
+						scrollTop: $( '.last-message' ).offset().top - 85
+					}, 500 );
+				}
+				$( '.tux-messagelist' ).messagetable().data('messagetable').load();
+				return $('.last-message').find('.translate-order').html();
+			}									
+		},
+		loadFromOffset: function( offset ){
+			this.clear();
 			var remaining,
 				query,
 				messageTable = this,
 				$messageList = $( '.tux-messagelist' ),
-				offset = this.$loader.data( 'offset' ),
 				filter = messageTable.$loader.data( 'filter' ),
 				targetLangCode = $messageList.data( 'targetlangcode' ),
 				messagegroup = messageTable.$loader.data( 'messagegroup' ),
@@ -784,31 +815,8 @@
 				// in duplicate messages shown in the page
 				return;
 			}
-			messageTable.loading = true;
-			var line = 13;
-			var loaded = false;
-			while(!loaded){
-				$('.tux-message').each( function(index, element){
-					var order = $(element).find('.translate-order').html();
-					if (order == line){
-						$(element).data( 'translateeditor' ).show();
-						loaded = true;
-						if ( $( document ).height() -
-							( $( window ).height() + window.pageYOffset + $(element).height() ) > 0
-						) {
-							$( 'html, body' ).stop().animate( {
-								scrollTop: $( '.tux-message-editor:visible' ).offset().top - 85
-							}, 500 );
-						}
-					}
-					//console.log(index+' '+element+' '+order);
-				});
-				if (!loaded){
-					//this.load();
-					$( '.tux-messagelist' ).messagetable().data('messagetable').load();
-				}				
-			}
 
+			messageTable.loading = true;
 
 			mw.translate.getMessages( messagegroup, targetLangCode, offset, pageSize, filter )
 				.done( function ( result ) {
