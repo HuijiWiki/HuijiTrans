@@ -1,5 +1,5 @@
 <?php
-class HistoryDefinitionAid extends TranslationAid{
+class HistoryAid extends TranslationAid{
 	public function getData(){
 		$page = $this->handle->getKey();
 		$ns = $this->handle->getTitle()->getNamespace();
