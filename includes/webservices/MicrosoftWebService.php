@@ -155,8 +155,8 @@ class AccessTokenAuthentication {
      *
      * @return string.
      */
-                                    function getTokens($grantType, $scopeUrl, $clientID, $clientSecret, $authUrl){
-                                    try {
+        function getTokens($grantType, $scopeUrl, $clientID, $clientSecret, $authUrl){
+        try {
             //Initialize the Curl Session.
             $ch = curl_init();
             //Create the request Array.
@@ -193,9 +193,9 @@ class AccessTokenAuthentication {
             if($strResponse == false) throw new Exception("curl Error");
             $objResponse = json_decode($strResponse);
 	    
-            if ($objResponse->error){
-                throw new Exception($objResponse->error_description);
-            }
+            // if ($objResponse->error){
+            //     throw new Exception($objResponse->error_description);
+            // }
 	    
 
             return $objResponse->access_token;
