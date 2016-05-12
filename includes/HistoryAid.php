@@ -17,7 +17,7 @@ class HistoryAid extends TranslationAid{
 		}
 
 		//BuildHtml
-		$templateParser = new TemplateParser(  __DIR__ . '/../Views');
+		$templateParser = new TemplateParser(  __DIR__ . '/../views');
 		
 		$history = $templateParser->processTemplate(
     		'history',
