@@ -1,6 +1,7 @@
 <?php
 class HistoryAid extends TranslationAid{
 	public function getData(){
+		global $wgContLang;
 		$page = $this->handle->getKey();
 		$ns = $this->handle->getTitle()->getNamespace();
 		//getHistory
