@@ -50,18 +50,24 @@ class ApiSrtSubmit extends ApiBase {
         return true;              
     }
     $label = $this->getMain()->getVal( 'id' );
-    $description = $this->getMain()->getVal( 'description' );
+    $description = str_replace("\"", "\\\"", $this->getMain()->getVal( 'description' ));
     $file = $this->getMain()->getUpload( 'file' );
     $language = $this->getMain()->getVal( 'language' );
     if ($language == '' || !isset($language)){
       $language = 'en';
     }
-    //@TODO There can't be duplicate ids
     $id = preg_replace('/[^A-Za-z0-9_\-]/', '_', $label);
+    $id_real = $id;
     $filename = $file->getTempName();
     $yml = "/var/www/virtual/".$wgHuijiPrefix."/external/yml";
     $ymlTemplate = "/var/www/src/extensions/HuijiTrans/includes/formats/srt.yml";
     $structure = "/var/www/virtual/".$wgHuijiPrefix."/external/srt/{$id}";
+    $i = 0;
+    while(file_exists($structure)){
+      $i++;
+      $id_real = $id.'_'.$i;
+      $structure = "/var/www/virtual/".$wgHuijiPrefix."/external/srt/{$id_real}";
+    }
     $oldmask = umask(0);
     if (!file_exists($yml)){
       mkdir($yml, 0777,true);
@@ -71,10 +77,10 @@ class ApiSrtSubmit extends ApiBase {
     }
     umask($oldumask); 
     $file_contents = file_get_contents($ymlTemplate);
-    $file_contents = str_replace("%id%",$id,$file_contents);
-    $file_contents = str_replace("%label%",$label,$file_contents);
-    $file_contents = str_replace("%description%",$description,$file_contents);
-    file_put_contents($yml."/{$id}.yml", $file_contents);
+    $file_contents = str_replace("%id%",$id_real,$file_contents);
+    $file_contents = str_replace("%label%",$id, $file_contents);
+    $file_contents = str_replace("%description%",'"'.$description.'"', $file_contents);
+    file_put_contents($yml."/{$id_real}.yml", $file_contents);
     $text =  file_get_contents($filename);
     $text = iconv(mb_detect_encoding($text, mb_detect_order(), true), "UTF-8", $text);
     file_put_contents($structure."/{$language}.srt", $text); 

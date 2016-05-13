@@ -1292,7 +1292,7 @@
 
             // Display the documentation only if it's not empty and
             // documentation language is configured
-            if ( documentation.error ) {
+            if ( !documentation || documentation.error ) {
                 // TODO: better error handling, especially since the presence of documentation
                 // is heavily hinted at in the UI
                 return;
