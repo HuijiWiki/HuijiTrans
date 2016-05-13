@@ -1554,7 +1554,7 @@
                         .addClass( 'three columns text-right service' )
                         .text( translation.service )
                 );
-
+                console.log(translation);
                 translateEditor.suggestionAdder( $translation, translation.target );
 
                 $mtSuggestions.append( $translation );
