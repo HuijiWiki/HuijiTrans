@@ -121,7 +121,7 @@ abstract class TranslationAid {
 			'definitiondiff' => 'UpdatedDefinitionAid',
 			'ttmserver' => 'TTMServerAid',
 			'support' => 'SupportAid',
-			//'gettext' => 'GettextDocumentationAid',
+			'gettext' => 'GettextDocumentationAid',
 			'insertables' => 'InsertablesAid',
 			'history' => 'HistoryAid',
 		);

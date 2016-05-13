@@ -1554,7 +1554,6 @@
                         .addClass( 'three columns text-right service' )
                         .text( translation.service )
                 );
-                console.log(translation);
                 translateEditor.suggestionAdder( $translation, translation.target );
 
                 $mtSuggestions.append( $translation );
@@ -1665,7 +1664,7 @@
                 }
 
                 translateEditor.showMessageDocumentation( result.helpers.documentation );
-                translateEditor.showUneditableDocumentation( result.helpers.gettext );
+                //translateEditor.showUneditableDocumentation( result.helpers.gettext );
                 translateEditor.showAssistantLanguages( result.helpers.inotherlanguages );
                 translateEditor.showTranslationMemory( result.helpers.ttmserver );
                 translateEditor.showMachineTranslations( result.helpers.mt );
