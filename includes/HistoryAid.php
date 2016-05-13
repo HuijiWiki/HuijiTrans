@@ -11,7 +11,7 @@ class HistoryAid extends TranslationAid{
 		$i = 0;
 		$value = array();
 		while($lastRev != null){
-			$value[$i]['text'] = $lastRev->getContent->getNativeData();
+			$value[$i]['text'] = $lastRev->getContent()->getNativeData();
 			$value[$i]['user'] = $lastRev->getUser()->getName();
 			$i++;
 			$lastRev = $lastRev->getNext();
