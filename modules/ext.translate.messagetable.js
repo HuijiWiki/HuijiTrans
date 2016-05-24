@@ -677,7 +677,7 @@
 				if ( !filter || filter.indexOf( '!translated' ) >= 0 ) {
 					messageTable.messages = [];
 					// default filter for proofread mode
-					mw.translate.changeFilter( '!last-translator:' + userId  );
+					mw.translate.changeFilter( '!last-translator:' + 0  );
 					$tuxTabUnproofread.addClass( 'selected' );
 				}
 

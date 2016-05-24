@@ -13,7 +13,7 @@ class ApiSrtSubmit extends ApiBase {
          $responseBody = array(
           'state'  => 200,
           'message' => '请使用Post方式发送HTTP请求',
-          'result' => $avatar->getResult(),
+          'result' => '',
         );
         $result = $this->getResult();
         $result->addValue($this->getModuleName(),'res', $responseBody);   
@@ -25,7 +25,7 @@ class ApiSrtSubmit extends ApiBase {
          $responseBody = array(
           'state'  => 200,
           'message' => '本维基处于只读状态。',
-          'result' => $avatar->getResult(),
+          'result' => '',
         );
         $result = $this->getResult();
         $result->addValue($this->getModuleName(),'res', $responseBody);   
@@ -34,7 +34,7 @@ class ApiSrtSubmit extends ApiBase {
          $responseBody = array(
           'state'  => 200,
           'message' => '您没有上传翻译文件的权限。',
-          'result' => $avatar->getResult(),
+          'result' => '',
         );
         $result = $this->getResult();
         $result->addValue($this->getModuleName(),'res', $responseBody);   
@@ -43,7 +43,7 @@ class ApiSrtSubmit extends ApiBase {
          $responseBody = array(
           'state'  => 200,
           'message' => '您已被封禁。',
-          'result' => $avatar->getResult(),
+          'result' => '',
         );
         $result = $this->getResult();
         $result->addValue($this->getModuleName(),'res', $responseBody);   
@@ -91,12 +91,12 @@ class ApiSrtSubmit extends ApiBase {
       $responseBody = array(
         'state'  => 200,
         'message' => 'success',
-        'result' => '/wiki/特殊:信息组管理',
+        'result' => '',
       );      
     } else {
       //remove invalid file
       unlink($structure."/{$language}.srt");
-      unlink($yml."/{$id}.yml");
+      unlink($yml."/{$id_real}.yml");
       $responseBody = array(
         'state'  => 500,
         'message' => 'srt文件不合法。',

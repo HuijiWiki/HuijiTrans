@@ -25,7 +25,7 @@ class SpecialTranslate extends SpecialPage {
 		parent::__construct( 'Translate' );
 	}
 	protected function getGroupName() {
-		return 'wiki';
+		return 'trans';
 	}
 	/**
 	 * Access point for this special page.
@@ -398,7 +398,7 @@ class SpecialTranslate extends SpecialPage {
 			//'Hardest',
 			//'outdated' => 'fuzzy',
 			'translated' => 'translated',
-			'unproofread' => "!last-translator:$userId",
+			'unproofread' => "!last-translator:0",
 		);
 		$params = $this->nondefaults;
 		$params['task'] = 'custom';
