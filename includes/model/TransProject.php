@@ -7,7 +7,7 @@
  * @license GPL-2.0+
  */
  class TransProject {
-	protected $cache;
+	protected static $cache;
 	protected $mId;
 	protected $mName;
 	protected $mWorkflow;
@@ -37,7 +37,7 @@
 		}
 		else {
 			$tp = new TransProject();
-			$tp->$mId = $id;
+			$tp->mId = $id;
 			$dbr = wfGetDB(DB_SLAVE);
 			$s = $dbr->selectRow(
 				'transproject',
@@ -54,7 +54,7 @@
 			);
 			if ($s){
 				$tp->mName = $s->tp_name;
-				$tp->mWorkflow = $s->workflow;
+				$tp->mWorkflow = $s->tp_workflow;
 				$tp->mPage = $s->tp_page;
 				$tp->mPublicationTime = $s->tp_publication_time;
 				$tp->mHead = $s->tp_head;
@@ -129,13 +129,19 @@
 	public function getName(){
 		return $this->mName;
 	}
+	public function getHead(){
+		return $this->mHead;
+	}
+	public function getHeadType(){
+		return $this->mHeadType;
+	}
 	//Various time funciton
 	//abstract protected function getCreationTime();
 	//abstract protected function getLastEditionTime();
 	public function getPublicationTime(){
 		return HuijiFunctions::getTimeAgo($this->mPublicationTime);
 	}
-	public function getList($head, $headType, $prevll = null){
+	protected function getList($head, $headType, $prevll = null){
 		if ($head == ''){
 			return null;
 		}
@@ -147,32 +153,34 @@
 		$ll->identifier = $identifier;
 		$ll->type = $type;
 		$ll->prev = $prevll;
-		$ll->next = getList($next, $nextType, $ll);
+		$ll->next = $this->getList($next, $nextType, $ll);
 		return $ll;
 	}
-	public function getListFromJson($it, $prevll = null){
-		if ($head == ''){
+	protected function getListFromJson($it, $prevll = null){
+		$obj = $it->current();
+		if ($obj == ''){
 			return null;
 		}
-		$arr = $it->current();
-		$type = $arr['type'];
-		$identifier = $arr['id'];
+		$type = $obj->type;
+		$identifier = $obj->id;
 		$ll = new LinkedList();
 		$ll->id = $this->mId;
 		$ll->identifier = $identifier;
 		$ll->type = $type;
 		$ll->prev = $prevll;
-		$ll->next = getList($it->next(), $ll);
+		$it->next();
+		$ll->next = $this->getListFromJson($it, $ll);
 		return $ll;
 	}
 	public function getIteratorFromJson($jsonArr){
-		$arrIt = $jsonArr->getIterator();
-		$llHead = getListFromJson($arrIt);
+		$ao = new ArrayObject($jsonArr);
+		$arrIt = $ao->getIterator();
+		$llHead = $this->getListFromJson($arrIt);
 		$it = new TransProjectIterator($llHead);
 		return $it;
 
 	}
-	private function getNext($identfier, $type){
+	protected function getNext($identifier, $type){
 		if ($type == 0){
 			//Look up identifier,
 			$dbr = wfGetDB(DB_SLAVE);
@@ -185,7 +193,8 @@
 				__METHOD__
 			);
 			if ($s != ''){
-				return array($s->next, $->next_type);
+
+				return array($s->next, $s->next_type);
 			} else {
 				return array(null, null);
 			}
@@ -202,7 +211,7 @@
 				__METHOD__
 			);
 			if ($s != ''){
-				return array($s->next, $->next_type);
+				return array($s->next, $s->next_type);
 			} else {
 				return array(null, null);
 			}			
@@ -218,18 +227,19 @@
 		$isHead = true;
 		foreach($it as $ll){
 			if ($isHead){
-				$this->setHead($ll->$identifier, $ll->$type);
+				$this->setHead($ll->identifier, $ll->type);
 				$isHead = false;
 			}
 			$ll->save();
 		}
+		$it->rewind();
 	}
 	public function getMessageGroups(){
 		$it = $this->getIterator();
 		$res = array();
 		foreach($it as $item){
 			if ($item->type == 0){
-				$res[] = MessageGroups::getGroup($item->$identifier);
+				$res[] = MessageGroups::getGroup($item->identifier);
 			}
 		}
 		return $res;
@@ -249,14 +259,14 @@
 		$res = array();
 		foreach($it as $item){
 			if ($item->type == 1){
-				$res[] = Title::newFromText($item->$identifier);
+				$res[] = Title::newFromText($item->identifier);
 			}
 		}
 		return $res;
 
 	}
 
-	protected function getWorkflowState(){
+	public function getWorkflowState(){
 		switch($this->mWorkflow){
 			case 0:
 				return 'new';
@@ -273,24 +283,34 @@
 		}
 	}
 
-	public function remove($identifier){
-		if (isset ($this->mIterator) ){
-			$it = $this->mIterator;
-		} else {
-			$this->mIterator = $this->getIterator();
-			$this->getCache()->set($this->mId, $this);
-			$it = $this->mIterator;
-		}
+	public function remove($identifier, $type){
+		$it = $this->getIterator();
 		foreach($it as $ll){
-			if ($ll->identifier == $identifier){
-				$ll->prev->next = $ll->next;
-				$ll->prev->save();
-				$ll->next->prev = $ll->prev;
-				$ll->next->save();
+			if ($ll->identifier == $identifier && $ll->type == $type){
+				if ($ll->prev != null){
+					$ll->prev->next = $ll->next;
+					$ll->prev->save();
+				} 
+				if ($ll->next != null) {
+					$ll->next->prev = $ll->prev;
+					$ll->next->save();					
+				}
 				$ll->delete();
 			}
 		}
-
+	}
+	public function append($identifier, $type){
+		$it = $this->getIterator();
+		foreach($it as $ll){
+			if ($ll->next == null){
+				$ll->next = new LinkedList();
+				$ll->next->id = $this->mId;
+				$ll->next->identifier->$identifier;
+				$ll->next->type = $type;
+				$ll->next->prev = $ll;
+				$ll->next->next = null;
+			}
+		}
 	}
 
 	public function delete(){
@@ -312,12 +332,12 @@
 	private static function isValidName($name){
 		$dbr = wfGetDB(DB_SLAVE);
 		$s = $dbr->select(
-			'translateproject',
+			'transproject',
 			array('tp_id'),
 			array('tp_name' => $name),
 			__METHOD__
 		);
-		if ($s == ''){
+		if (count($s) > 0){
 			return true;
 		} else {
 			return false;
@@ -325,10 +345,10 @@
 	}
 
 	public static function createNew($name){
-		if ($isValidName($name)){
+		if (self::isValidName($name)){
 			$dbw = wfGetDB(DB_MASTER);
 			$dbw->insert(
-				'translateproject',
+				'transproject',
 				array('tp_name' => $name),
 				__METHOD__
 			);
@@ -342,13 +362,13 @@
 	public function setHead($head, $headType){
 		$dbw = wfGetDB(DB_MASTER);
 		$dbw->update(
-			'translateproject',
-			array('tp_id' => $this->mId),
+			'transproject',
 			array('tp_head' => $head, 'tp_head_type' => $headType),
+			array('tp_id' => $this->mId),
 			__METHOD__
 		);
-		$this->mHead = $head,
-		$this->headType = $headType,
+		$this->mHead = $head;
+		$this->headType = $headType;
 		$tpCache = self::getCache();
 		$tpCache->set($this->mId, $this);
 	}
@@ -383,45 +403,50 @@ class LinkedList{
 		}
 	}
 	public function save(){
+		$dbw = wfGetDB(DB_MASTER);
 		if ($this->type == 0 ){
-			$dbw = wfGetDB(DB_MASTER);
+			
 			$dbw->upsert(
 				'transproject_messagegroups',
 				array(
 					'tp_id' => $this->id,
 					'mg_name' => $this->identifier,
-					'next' => $this->next->identifier,
-					'next_type' => $this->next->type,
-				),
-				array(
-					'next' => $this->next->identifier,
-					'next_type' => $this->next->type,
+					'next' => (is_object($this->next)?$this->next->identifier:null),
+					'next_type' => (is_object($this->next)?$this->next->type:null),
 				),
 				array(
 					'tp_id' => $this->id,
 					'mg_name' => $this->identifier,
 				),
+				array(
+					'tp_id' => $this->id,
+					'mg_name' => $this->identifier,
+					'next' => (is_object($this->next)?$this->next->identifier:null),
+					'next_type' => (is_object($this->next)?$this->next->type:null),
+				),
 				__METHOD__
-			)			
+			);			
 		} elseif ($this->type == 1){
 			$dbw->upsert(
 				'transproject_sharedresources',
 				array(
 					'tp_id' => $this->id,
 					'rs_name' => $this->identifier,
-					'next' => $this->next->identifier,
-					'next_type' => $this->next->type,
-				),
-				array(
-					'next' => $this->next->identifier,
-					'next_type' => $this->next->type,
+					'next' => (is_object($this->next)?$this->next->identifier:null),
+					'next_type' => (is_object($this->next)?$this->next->type:null),
 				),
 				array(
 					'tp_id' => $this->id,
 					'rs_name' => $this->identifier,
 				),
+				array(
+					'tp_id' => $this->id,
+					'rs_name' => $this->identifier,
+					'next' => (is_object($this->next)?$this->next->identifier:null),
+					'next_type' => (is_object($this->next)?$this->next->type:null),
+				),
 				__METHOD__
-			)				
+			);				
 		}
 	}
 }
@@ -436,6 +461,7 @@ class TransProjectIterator implements Iterator {
 	}
 	function rewind(){
 		$this->position = 0;
+		$this->element = $this->mHead;
 	}
 	function current(){
 		return $this->element;
