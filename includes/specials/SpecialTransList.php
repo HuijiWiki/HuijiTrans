@@ -12,7 +12,7 @@
  *
  * @ingroup SpecialPage TranslateSpecialPage
  */
-class TransList extends SpecialPage {
+class SpecialTransList extends SpecialPage {
 	function __construct() {
 		parent::__construct( 'TransList' );
 	}
@@ -20,12 +20,65 @@ class TransList extends SpecialPage {
 		return 'trans';
 	}
 	public function execute( $parameters ) {
+		$out = $this->getOutput();
+		$out->enableOOUI();
+		$this->setHeaders();
+		$out->addModules('ext.voteNY.styles');
+		$out->addModules('ext.voteNY.scripts');
+		$out->addModules('ext.huijitrans.translist');
+		// $circleButtons = array(
+		// 				new OOUI\ButtonWidget( array(
+		// 					'id' => 'trans-published-projects-button',
+		// 					'flags' => 'primary circle',
+		// 					'label' => '翻译作品',
+		// 					'infusable' => true,
+ 	// 					) ), 
+		// 				new OOUI\ButtonWidget( array(
+		// 					'id' => 'trans-memebers-button',
+		// 					'flags' => 'primary circle',
+		// 					'label' => '组成员',
+		// 					'content' => '3',
+		// 					'infusable' => true,
+		// 				) ), 
+		// 				new OOUI\ButtonWidget( array(
+		// 					'id' => 'trans-memebers-button',
+		// 					'flags' => 'primary circle',
+		// 					'label' => '正在翻译',
+		// 					'content' => '124',
+		// 					'infusable' => true,
+		// 				) ), 	
+		// 				new OOUI\ButtonWidget( array(
+		// 					'id' => 'trans-follow-group-button',
+		// 					'flags' => 'primary circle',
+		// 					'label' => '关注',
+		// 					'infusable' => true,
+
+		// 				) ), 	
+		// 				new OOUI\ButtonWidget( array(
+		// 					'id' => 'trans-manager-button',
+		// 					'flags' => 'primary circle',
+		// 					'label' => '进入后台',
+		// 					'href' => '/wiki/Special:TransManager',
+		// 					'nofollow' => true,
+		// 					'infusable' => true,
+		// 				) ), 							
+		// 			);
+		// $fieldArray = [];
+		// foreach ($circleButtons as $button){
+		// 	$fieldArray[] = new OOUI\FieldLayout( $button );
+
+		// }
+		// $widget = new OOUI\FieldsetLayout( array(
+		// 	'items' => $fieldArray
+		// ) );
+
+		// $out->addHtml($widget);
 	}
 	public function getCircles(){
 		$circles = array(
 			'published' => 'number',
 			'members' => 'number',
-			'new' => 'number',
+			'newwork' => 'number',
 			'follow' => 'button',
 			'manage' => 'button',
 		);
@@ -55,7 +108,7 @@ class TransNumber {
 	public function members(){
 		return SiteStats::numberingroup( 'members' );
 	}
-	public function new(){
+	public function newwork(){
 		global $wgContLang;
 		$states = $this->getWorkflowStates();
 		$statesCount = array_count_values($states);
@@ -112,7 +165,7 @@ class TransButton {
 
 	}
 	public function published(){
-		return Linker::linkKnown( '', wfMessage('trans-published')->plain(), warray('class' => 'published'));
+		return Linker::linkKnown( '', wfMessage('trans-published')->plain(), array('class' => 'published'));
 	}
 
 }

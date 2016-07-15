@@ -1,3 +1,9 @@
 {
-	"tux-tab-unproofread":"校对"
+	"tux-tab-unproofread":"校对",
+	"translate-workflow-state-new1":"新项目",
+	"translate-workflow-state-needs_proofreading1":"待校对",
+	"translate-workflow-state-ready1":"已完工",
+	"translate-workflow-state-published1":"已发布",
+	"translate-workflow-state-delete":"已删除",
+	"translate-workflow-state-error": "错误"
 }

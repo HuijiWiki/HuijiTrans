@@ -11,7 +11,9 @@
 	protected $mId;
 	protected $mName;
 	protected $mWorkflow;
-	protected $mPage;
+	protected $mPageNamespace;
+	protected $mPageId;
+	protected $mPageTitle;
 	protected $mPublicationTime;
 	protected $mHead;
 	protected $mHeadType;
@@ -44,10 +46,12 @@
 				array( 'tp_id',
 					'tp_name',
 					'tp_workflow',
-					'tp_page',
 					'tp_publication_time',
 					'tp_head',
 					'tp_head_type',
+					'page_namespace',
+					'page_title',
+					'page_id',
 				),
 				array( 'tp_id' => $id ),
 				__METHOD__
@@ -55,13 +59,16 @@
 			if ($s){
 				$tp->mName = $s->tp_name;
 				$tp->mWorkflow = $s->tp_workflow;
-				$tp->mPage = $s->tp_page;
 				$tp->mPublicationTime = $s->tp_publication_time;
 				$tp->mHead = $s->tp_head;
 				$tp->mHeadType = $s->tp_head_type;
+				$tp->mPageTitle = $s->page_title;
+				$tp->mPageId = $s->page_id;
+				$tp->mPageNamespace = $s->page_namespace;
 				$tpCache->set($id, $tp);
 				return $tp;				
 			} else {
+				$tpCache->set($id, $tp);
 				return null;
 			}
 
@@ -129,6 +136,13 @@
 	public function getName(){
 		return $this->mName;
 	}
+	public function getId(){
+		return $this->mId;
+	}
+	public function getPage(){
+		$t = Title::makeTitleSafe($this->mPageNamespace, $this->mPageTitle);
+		return $t;
+	}
 	public function getHead(){
 		return $this->mHead;
 	}
@@ -139,7 +153,7 @@
 	//abstract protected function getCreationTime();
 	//abstract protected function getLastEditionTime();
 	public function getPublicationTime(){
-		return HuijiFunctions::getTimeAgo($this->mPublicationTime);
+		return HuijiFunctions::getTimeAgo(strtotime($this->mPublicationTime));
 	}
 	protected function getList($head, $headType, $prevll = null){
 		if ($head == ''){
@@ -245,11 +259,29 @@
 		return $res;
 	}
 
-	public function getTranslators(){
+	public function getTranslators($lang = "zh-cn"){
 		$groups = $this->getMessageGroups();
 		$translators = array();
 		foreach($groups as $group){
-			$translators = array_merge($translators, $group->getAuthors());
+			if (is_null($group)){
+				continue;
+			}
+			$collection = $group->initCollection($lang);
+			$authors = $collection->getAuthors();
+			foreach ($authors as $author){
+				$huijiUser = HuijiUser::newFromName($author);
+				$translators[] = array(
+					"name" => $author,
+					"avatar" => array(
+							"l" => $huijiUser->getAvatar('l')->getAvatarUrlPath(),
+							"ml" => $huijiUser->getAvatar('ml')->getAvatarUrlPath(),
+							"m" => $huijiUser->getAvatar('m')->getAvatarUrlPath(),
+							"s" => $huijiUser->getAvatar('s')->getAvatarUrlPath(),
+					),
+				);
+			}
+			//$translators = array_merge($translators, $group->getAuthors());
+			
 		}
 		return $translators;
 	}
@@ -265,21 +297,34 @@
 		return $res;
 
 	}
+	public function toJson(){
+		$arr = [];
+		$it = $this->getIterator();
+		foreach ($it as $item) {
+			$obj = new \stdClass();
+			$obj->id = $item->identifier;
+			$obj->type = $item->type;
+			$arr[] = $obj;
+		}
+		$output = json_encode($arr);
+		return $output;
+
+	}
 
 	public function getWorkflowState(){
 		switch($this->mWorkflow){
 			case 0:
-				return 'new';
+				return wfMessage('translate-workflow-state-new')->text();
 			case 1:
-				return 'needs_proofread';
+				return wfMessage('translate-workflow-state-needs-proofreading')->text();
 			case 2:
-				return 'ready';
+				return wfMessage('translate-workflow-state-ready')->text();
 			case 3:
-				return 'published';
+				return wfMessage('translate-workflow-state-published')->text();
 			case 4:
-				return 'deleted';
+				return wfMessage('translate-workflow-state-deleted')->text();
 			default:
-				return 'error';
+				return wfMessage('translate-workflow-state-error')->text();
 		}
 	}
 
@@ -296,6 +341,7 @@
 					$ll->next->save();					
 				}
 				$ll->delete();
+				break;
 			}
 		}
 	}
@@ -315,12 +361,15 @@
 
 	public function delete(){
 		$dbw = wfGetDB(DB_MASTER);
-		$dbw->update(
+		$r = $dbw->update(
 			'transproject',
 			array('tp_workflow' => 4),
 			array('tp_id' => $this->mId),
 			__METHOD__
 		);
+		if ($r == ''){
+			return false;
+		}
 		$this->mWorkflow = 4;
 		$cache = self::getCache();
 		$cache->set($this->mId, $this);
@@ -345,6 +394,7 @@
 	}
 
 	public static function createNew($name){
+		global $wgMemc, $wgHuijiPrefix;
 		if (self::isValidName($name)){
 			$dbw = wfGetDB(DB_MASTER);
 			$dbw->insert(
@@ -353,11 +403,31 @@
 				__METHOD__
 			);
 			$id = $dbw->insertId();
+			$key = wfForeignMemcKey('huiji', '', 'TransSite', 'getStats', 'translating_work', $wgHuijiPrefix);
+			$wgMemc->incr($key);
 			return self::newFromId($id);			
 		} else {
 			return null;
 		}
 
+	}
+	public static function rename($id, $newName){
+		if (self::isValidName($to)){
+			$dbw->update(
+				'transproject',
+				array('tp_name' => $newName),
+				array('tp_id' => $id),
+				__METHOD__
+			);
+			$r = $dbw->affectedRows();
+			if ($r > 0){
+				return true;
+			} else {
+				return false;
+			}	
+		} else {
+			return false;
+		}
 	}
 	public function setHead($head, $headType){
 		$dbw = wfGetDB(DB_MASTER);
@@ -372,6 +442,104 @@
 		$tpCache = self::getCache();
 		$tpCache->set($this->mId, $this);
 	}
+	public function recall(){
+		global $wgHuijiPrefix, $wgOssPrefix, $wgMemc;
+		if ($mWorkflow != 3){
+			return false;
+		}
+		$dbw = wfGetDB(DB_MASTER);
+		$this->mPublicationTime = '';
+		$this->mPageTitle = null;
+		$this->mPageId = null;
+		$this->mPageNamespace = null;
+		$this->mWorkflow = 2;
+		$tpCache = self::getCache();
+		$tpCache->set($this->mId, $this);
+		$dbw->update(
+			'transproject',
+			array('tp_workflow' => 2, 
+				'tp_publication_time' => $this->mPublicationTime,
+				'page_title' => '',
+				'page_id' => '',
+				'page_namespace' => '',
+				),
+			array('tp_id' => $this->mId),
+			__METHOD__
+		);
+		$key = wfForeignMemcKey('huiji', '', 'TransSite', 'getStats', 'published_work', $wgHuijiPrefix);
+		$wgMemc->decr($key);
+		$key = wfForeignMemcKey('huiji', '', 'TransSite', 'getStats', 'translating_work', $wgHuijiPrefix);
+		$wgMemc->incr($key);		
+
+	}
+
+	public function publish( $publicName = null ){
+		global $wgHuijiPrefix, $wgOssPrefix, $wgMemc;
+		if ($this->mWorkflow >= 4){
+			return false;
+		}
+		$dbw = wfGetDB(DB_MASTER);
+		$this->mWorkflow = 3;
+		$this->mPublicationTime = date( 'Y-m-d H:i:s' );
+		$title = Title::makeTitleSafe(
+			NS_PUBLICATION,
+			$publicName // @TODO: convert this name to valid html.
+		);
+		$article = new WikiPage($title);
+		if ($article->exists()){
+			return false;
+		}
+
+		// Create Downloadable file.
+		$it = $this->getIterator();
+		$output = "";
+		foreach ($it as $item) {
+			$output .= $item->getContent();
+		}
+		if ( empty($output) ){
+			return false;
+		}
+		$fs = wfGetFS(FS_OSS);
+		$path = "$wgHuijiPrefix/external/publication/{$publicName}";
+		$fs->put( $path, $output );
+		
+	
+		$article->doEditContent(
+			new WikitextContent('Project published! Link: http://fs.huijiwiki.com/'.$path),
+			'bot edit',
+			EDIT_NEW && EDIT_FORCE_BOT,
+			false,
+			User::newFromName('米拉西斯')
+		);
+		
+		$aid = $article->getId();
+		$r = $dbw->update(
+			'transproject',
+			array('tp_workflow' => 3, 
+				'tp_publication_time' => $this->mPublicationTime,
+				'page_title' => $title->getDBkey(),
+				'page_id' => $aid,
+				'page_namespace' => NS_PUBLICATION,
+				),
+			array('tp_id' => $this->mId),
+			__METHOD__
+		);
+		if ($r == ''){
+			return false;
+		}
+		$this->mPageTitle = $title->getDBkey();
+		$this->mPageId = $aid;
+		$this->mPageNamespace = NS_PUBLICATION;
+		$tpCache = self::getCache();
+		$tpCache->set($this->mId, $this);
+
+	
+		$key = wfForeignMemcKey('huiji', '', 'TransSite', 'getStats', 'published_work', $wgHuijiPrefix);
+		$wgMemc->incr($key);
+		$key = wfForeignMemcKey('huiji', '', 'TransSite', 'getStats', 'translating_work', $wgHuijiPrefix);
+		$wgMemc->decr($key);
+		return true;
+	}
 }
 class LinkedList{
 	public $id;
@@ -379,7 +547,29 @@ class LinkedList{
 	public $next;
 	public $prev;
 	public $type;
-	public function delete( ){
+	public function getContent($lang = "zh-cn"){
+		if ($this->type == 0 ){
+			MediaWiki\SuppressWarnings();
+			$group = MessageGroups::getGroup($this->identifier);
+			$collection = $group->initCollection( $lang );
+			$ffs = $group->getFFS();
+			$data = $ffs->writeIntoVariable( $collection );
+			return $data;
+		}
+		if ($this->type == 1){
+			$title = Title::newFromText($this->identifier);
+			if ($title != null){
+				$article = new WikiPage($title);
+				$content = $article->getContent();
+				$data = $content->getNativeData();
+				return $data;
+			}
+			return "";
+			
+
+		}
+	}
+	public function delete(){
 		if ($this->type == 0 ){
 			$dbw = wfGetDB(DB_MASTER);
 			$dbw->delete(
@@ -454,7 +644,7 @@ class TransProjectIterator implements Iterator {
 	private $position = 0;
 	private $element;
 	private $mHead;
-	public function __construct(LinkedList $head){
+	public function __construct($head){
 		$this->position = 0;
 		$this->element = $head;
 		$this->mHead = $head;

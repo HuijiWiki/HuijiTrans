@@ -1,19 +1,19 @@
 /**
- * Translate language statistics bar - jQuery plugin.
- * @author Niklas Laxström
- * @author Santhosh Thottingal
- * @license GPL-2.0+
- * @since 2012-11-30
- */
+* Translate language statistics bar - jQuery plugin.
+* @author Niklas Laxström
+* @author Santhosh Thottingal
+* @license GPL-2.0+
+* @since 2012-11-30
+*/
 
 /*
- * Usage:
- *	$( '<div>' ).languagestatsbar( {
- *		language: 'fi',
- *		group: 'core'
- *	} );
- * The status bar will be rendered to the newly created div. Or use any container.
- */
+* Usage:
+*	$( '<div>' ).languagestatsbar( {
+*		language: 'fi',
+*		group: 'core'
+*	} );
+* The status bar will be rendered to the newly created div. Or use any container.
+*/
 ( function ( mw, $ ) {
 	'use strict';
 
@@ -148,9 +148,13 @@
                 $('.ext-translate-container').prepend(
                     $('<div>').addClass('progress-wrap').append(
                         $('<span>').addClass('progress-translated').text(translated.toFixed() + '% 已翻译'),
-                        $('<span>').addClass('progress-checked').text(proofread.toFixed() + '% 已复核')
+                        $('<span>').addClass('progress-checked').text(proofread.toFixed() + '% 已复核'),
+                        $('<a>').addClass('export-to-file').attr('href', 'Special:Translate?taction=export&language='+this.language+'&task=export-to-file&group='+this.group).text('导出文档')
                     )
                 )
+            }else if(stats.group == $('.grouptitle.grouplink.tail').data('msggroupid')){
+                $('.progress-wrap').find('.progress-translated').text(translated.toFixed()+'% 已翻译');
+                $('.progress-wrap').find('.progress-checked').text(proofread.toFixed()+'% 已复核');
             }
 
 		},

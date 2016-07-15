@@ -185,12 +185,13 @@
 }
 
 .message-desc-edit {
-	background: transparent url(/extensions/Translate/resources/images/action-edit.png) left center no-repeat;
-	background-image: -webkit-linear-gradient(transparent, transparent), url(/extensions/Translate/resources/images/action-edit.svg);
+	/*background: transparent url(/extensions/Translate/resources/images/action-edit.png) left center no-repeat;*/
+	/*background-image: -webkit-linear-gradient(transparent, transparent), url(/extensions/Translate/resources/images/action-edit.svg);*/
 	/* @embed */
-	background-image: linear-gradient(transparent, transparent), url(/extensions/Translate/resources/images/action-edit.svg);
-	background-size: 18px 18px;
-	padding-left: 19px;
+	/*background-image: linear-gradient(transparent, transparent), url(/extensions/Translate/resources/images/action-edit.svg);*/
+	/*background-size: 18px 18px;*/
+	/*color: #333;*/
+    /*text-decoration: none;*/
 }
 
 .tm-suggestions-title,
@@ -228,12 +229,10 @@
 
 .tux-message-editor .help {
 	font-size: 16px;
-	padding: 10px 5px;
 }
 
 .tux-message-editor .help a {
 	font-size: 14px;
-	padding: 0 0 0 5px;
 }
 
 .editarea .tux-warnings-block {

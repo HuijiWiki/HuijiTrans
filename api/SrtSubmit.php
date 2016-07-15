@@ -87,6 +87,8 @@ class ApiSrtSubmit extends ApiBase {
     $command = "php /var/www/virtual/".$wgHuijiPrefix."/extensions/Translate/scripts/processMessageChanges.php  --conf=/var/www/virtual/".$wgHuijiPrefix."/LocalSettings.php";
     $output = $ret = '';
     exec($command, $output, $ret);
+    $command = "php /var/www/virtual/".$wgHuijiPrefix."/extensions/Translate/scripts/createMessageIndex.php  --conf=/var/www/virtual/".$wgHuijiPrefix."/LocalSettings.php";
+    exec($command);
     if ($ret == 0){
       $responseBody = array(
         'state'  => 200,
@@ -99,7 +101,7 @@ class ApiSrtSubmit extends ApiBase {
       unlink($yml."/{$id_real}.yml");
       $responseBody = array(
         'state'  => 500,
-        'message' => 'srt文件不合法。',
+        'message' => 'srt file is invalid',
         'result' => $output,
       );        
     }

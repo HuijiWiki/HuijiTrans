@@ -126,7 +126,7 @@ JSON2;
     // }
     public function testDelete(){
         $this->obj->delete();
-        $this->assertEquals('deleted',$this->obj->getWorkflowState());
+        $this->assertEquals('<translate-workflow-state-deleted>',$this->obj->getWorkflowState());
     }
     public function testRemove(){
         $jsonArr = json_decode($this->json);
@@ -144,6 +144,14 @@ JSON2;
             $roundtrip->next();
         }
         //Done
+    }
+    public function testPublish(){
+        $jsonArr = json_decode($this->json);
+        $it = $this->obj->getIteratorFromJson($jsonArr);
+        $this->obj->saveIterator($it);
+        $ret =  $this->obj->publish(HuijiFunctions::getTradeNo('TEST'));
+        $this->assertTrue($ret);
+        $this->assertEquals('<translate-workflow-state-published>',$this->obj->getWorkflowState());
     }
 }
 

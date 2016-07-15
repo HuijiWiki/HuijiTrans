@@ -20,4 +20,12 @@ class HuijiTransHooks {
 		}
 		return true;
 	}
+	public static function onAPIQuerySiteInfoStatisticsInfo(&$data){
+		global $wgHuijiPrefix;
+		$site = TransSite::newFromPrefix($wgHuijiPrefix);
+		$stats = $site->getStats(false);
+		$data['members'] = (int)$stats['members'];
+		$data['translating_work'] = (int)$stats['translating_work'];
+		$data['published_work'] = (int)$stats['published_work'];
+	}
 }

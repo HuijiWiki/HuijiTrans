@@ -104,9 +104,9 @@
     box-shadow: none!important;
     background: #fff;
 }
-.row.help {
-    position: absolute;
-    bottom: 0;
+.editcolumn .help {
+    display: inline-block;
+    margin-left: 20px;
 }
 .infocolumn-block .caret{
     display:none;
@@ -143,22 +143,28 @@
     border-top: 1px solid #e0e0e0;
     cursor: pointer;
 }
-.help {
-    display: none;
-}
-.message-desc-control{
-    display: none;
-}
+/*.message-desc-control{*/
+    /*display: none;*/
+/*}*/
 #wiki-body .infocolumn{
     padding-left: 20px;
+    min-height: 265px;
 }
 #wiki-body .editcolumn{
     padding-right: 20px;
     padding-bottom: 10px;
     width: 50%;
+    min-height: 265px;
+    padding-left: 25px;
+}
+.editcolumn textarea{
+    width: 100%;
 }
 .editcolumn .sourcemessage{
     display: none;
+}
+.editcolumn .tux-editor-editarea-block{
+    padding-left: 20px;
 }
 .tux-message-editor .editarea{
     width: 100%!important;
@@ -172,8 +178,12 @@
 #wiki-body .tux-editor-control-buttons{
     text-align: right;
 }
+.tux-editor-actions-block{
+    float: right;
+}
 #wiki-body .shortcutinfo{
     text-align: right;
+    clear: both;
 }
 #wiki-body .tux-message-editor .layout-actions{
     float: right;
@@ -296,6 +306,10 @@
     position: absolute;
     top: 0;
     right: 0;
+    z-index: 1;
+}
+.export-to-file{
+    margin-left: 20px;
 }
 .progress-translated{
     color: #09c;
@@ -307,6 +321,57 @@
 #mw-debug-html{
     display: none;
 }
-.skin-bootstrap-mediawiki .tux-messagetable-header.floating {
+.skin-BootstrapMediawiki .tux-messagetable-header{
+    transition: none;
+}
+.skin-BootstrapMediawiki .tux-messagetable-header.floating {
     top: 50px;
+    z-index: 90;
+}
+.intro{
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
+    font-weight: bold;
+}
+#wiki-body .message-desc{
+    padding: 5px 15px;
+}
+.message-desc-viewer{
+    display: inline-block;
+    margin-left: 20px;
+    margin-top: 10px
+}
+.history-btn{
+    /*float: left;*/
+    margin-left: 20px;
+    margin-top: 15px;
+    cursor: pointer;
+    display: inline-block;
+}
+.footer-column{
+    clear: both;
+}
+.message-desc-editor{
+    padding-left: 30px;
+    padding-right: 35px;
+}
+.message-desc-editor textarea{
+    width: 100%;
+}
+.history-suggestions .historytext{
+    padding-left: 45px!important;
+}
+.history-suggestions .service{
+    padding-right: 45px!important;
+}
+.history-suggestions{
+    padding-bottom: 20px;
+}
+.history-title{
+    font-size: 16px;
+    padding-left: 30px;
+    display: block;
+    font-weight: bold;
+    padding-bottom: 10px;
+    padding-top: 10px;
 }
